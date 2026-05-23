@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Retrace — investor landing site
 
-## Getting Started
+Public single-page marketing site for [Retrace](https://retracelab.com) — an AI coaching system for industrial field technicians.
 
-First, run the development server:
+Built for the XRCC Berlin 2026 hackathon. **Production:** https://retracelab.com.
+
+For project context (stack, design tokens, anti-deck design principles, positioning rules) see [`CLAUDE.md`](./CLAUDE.md).
+
+---
+
+## Quick start
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Requires Node ≥ 20.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## How we ship
 
-## Learn More
+**Rule:** the `main` branch is production. Nobody pushes to it directly. Every change reaches `main` through a PR from `develop`.
 
-To learn more about Next.js, take a look at the following resources:
+```
+feature-branch ──PR──> develop ──PR(CI-gated)──> main
+                          │                         │
+                          ▼                         ▼
+                  preview *.vercel.app        retracelab.com
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Day-to-day workflow
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Branch off `develop`** for any change:
+   ```bash
+   git checkout develop && git pull
+   git checkout -b feat/whatever
+   ```
+2. **Open a PR into `develop`**. CI runs `next build`. Vercel posts a preview URL to the PR.
+3. **Merge into `develop`** when CI is green. Preview at `develop-…vercel.app` updates automatically.
+4. **When `develop` is shippable**, open a PR from `develop` → `main`. Two status checks run: `build` and `enforce-main-source`.
+5. **Merge to main** → Vercel auto-deploys to `https://retracelab.com` within ~60s.
 
-## Deploy on Vercel
+### What you cannot do
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- ❌ Push directly to `main` (blocked by branch protection — even for admins).
+- ❌ Open a PR to `main` from a feature branch (the `enforce-main-source` check rejects it).
+- ❌ Force-push or delete `main`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+If you need to bypass — don't. Open a PR through `develop`.
+
+---
+
+## Deployments
+
+- **Production** (`main`) → https://retracelab.com (Vercel-hosted, custom domain on GoDaddy DNS).
+- **Preview** (every branch + PR) → unique `*.vercel.app` URL posted to each PR.
+- **Local dev** → `npm run dev` on http://localhost:3000.
+
+---
+
+## Stack
+
+Next.js 16 (App Router, Turbopack) · React 19 · Tailwind v4 · Framer Motion 12 · Inter + Geist Mono. See [`CLAUDE.md`](./CLAUDE.md) for the full layout and design-system reference.

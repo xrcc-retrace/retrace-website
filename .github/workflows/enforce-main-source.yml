@@ -1,0 +1,36 @@
+name: enforce-main-source
+
+# PRs targeting `main` MUST come from the `develop` branch.
+# This is paired with branch protection's "require status checks" to make
+# the rule physically enforced — even admins cannot merge a PR from a
+# feature branch directly into main.
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  check-source-branch:
+    name: enforce-main-source
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Verify PR source is develop
+        # github.head_ref is treated as untrusted input (it's a branch name
+        # which CAN contain shell metacharacters in adversarial scenarios),
+        # so we pass it through env rather than ${{ }} interpolation inside
+        # the shell script.
+        env:
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          if [ "$HEAD_REF" = "develop" ]; then
+            echo "PR source is develop. Proceeding."
+            exit 0
+          fi
+
+          echo "PRs to main must come from the 'develop' branch."
+          echo "This PR is from: $HEAD_REF"
+          echo ""
+          echo "Open your PR against 'develop' first, get it merged,"
+          echo "then open a PR from develop -> main."
+          exit 1
