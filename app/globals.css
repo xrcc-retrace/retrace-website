@@ -54,8 +54,26 @@ body {
   border-radius: 2px;
 }
 
+/* Hide native cursor on desktop with mouse — CustomCursor.tsx draws its own. */
+@media (hover: hover) and (pointer: fine) {
+  html,
+  body {
+    cursor: none;
+  }
+  /* Restore text caret in editable fields where it's essential */
+  input,
+  textarea,
+  [contenteditable] {
+    cursor: text;
+  }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
+  html,
+  body {
+    cursor: auto !important;
+  }
   *,
   *::before,
   *::after {
