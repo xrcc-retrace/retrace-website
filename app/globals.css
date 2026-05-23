@@ -54,8 +54,31 @@ body {
   border-radius: 2px;
 }
 
+/* Hide native cursor on desktop with mouse — CustomCursor.tsx draws its own.
+   Use the universal selector with !important: browser user-agent stylesheets
+   set `cursor: pointer` on buttons/links per-element, which overrides a
+   parent html/body rule. Without this, the system pointer keeps appearing
+   on top of interactive elements. */
+@media (hover: hover) and (pointer: fine) {
+  *,
+  *::before,
+  *::after {
+    cursor: none !important;
+  }
+  /* Restore text caret in editable fields where it's essential */
+  input,
+  textarea,
+  [contenteditable] {
+    cursor: text !important;
+  }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
+  html,
+  body {
+    cursor: auto !important;
+  }
   *,
   *::before,
   *::after {
