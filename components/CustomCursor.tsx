@@ -147,9 +147,9 @@ export function CustomCursor() {
           position: fixed;
           top: 0;
           left: 0;
-          width: 6px;
-          height: 6px;
-          margin: -3px 0 0 -3px;
+          width: 12px;
+          height: 12px;
+          margin: -6px 0 0 -6px;
           border-radius: 50%;
           background: var(--accent);
           transform: translate3d(var(--cx), var(--cy), 0);
@@ -199,9 +199,9 @@ export function CustomCursor() {
 
         /* Active mode — over an interactive element */
         .custom-cursor-root[data-cursor-mode="active"] .cursor-dot {
-          width: 10px;
-          height: 10px;
-          margin: -5px 0 0 -5px;
+          width: 18px;
+          height: 18px;
+          margin: -9px 0 0 -9px;
           opacity: 1;
         }
         .custom-cursor-root[data-cursor-mode="active"] .cursor-reticle {
@@ -216,9 +216,9 @@ export function CustomCursor() {
 
         /* Press mode — tactile feedback on mousedown */
         .custom-cursor-root[data-cursor-mode="press"] .cursor-dot {
-          width: 8px;
-          height: 8px;
-          margin: -4px 0 0 -4px;
+          width: 14px;
+          height: 14px;
+          margin: -7px 0 0 -7px;
           opacity: 0.7;
         }
         .custom-cursor-root[data-cursor-mode="press"] .cursor-reticle {
