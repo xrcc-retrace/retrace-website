@@ -1,0 +1,43 @@
+name: sync-develop
+
+# After every push to `main` (i.e. every production release), force-reset
+# `develop` to point at the same commit. Keeps commit histories aligned
+# under the squash-merge workflow.
+#
+# Safe because:
+# - develop is unprotected; force-pushes are allowed there.
+# - File contents are already identical (squash-merge), so the reset only
+#   rewrites SHA history, not any work.
+# - Concurrency group prevents overlapping runs.
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: sync-develop
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: reset-develop-to-main
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Reset develop to main
+        # github.sha is trusted (it's the SHA of the commit that triggered
+        # this workflow), but we still pipe through env per the safe pattern.
+        env:
+          MAIN_SHA: ${{ github.sha }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git push origin "$MAIN_SHA:refs/heads/develop" --force
+          echo "develop now points at $MAIN_SHA"

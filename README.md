@@ -51,6 +51,22 @@ feature-branch ──PR──> develop ──PR(CI-gated)──> main
 
 If you need to bypass — don't. Open a PR through `develop`.
 
+### Automatic: develop re-syncs to main after every release
+
+Every time `main` updates, a GitHub Action (`.github/workflows/sync-develop.yml`) force-resets `develop` to match. You'll see `develop` jump backward to main's SHA within ~30s of any merge to main.
+
+**Practical effect:** after a release, `git pull` on develop will say "diverged" — that's expected. Run:
+
+```bash
+git fetch origin
+git checkout develop
+git reset --hard origin/develop    # accept the auto-sync
+```
+
+(Or just throw away your local develop and re-branch off `origin/develop` for your next feature — easier.)
+
+Feature branches you'd already pushed are untouched. The auto-sync only rewrites the develop branch ref, never your branch.
+
 ---
 
 ## Deployments
