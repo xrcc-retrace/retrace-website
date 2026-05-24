@@ -10,9 +10,9 @@ const members = [
     bio: "FastAPI server, Gemini orchestration (2.5 Pro + 3.1 Live), structured-output extraction, ephemeral tokens, troubleshoot mode, web-grounded search.",
   },
   {
-    name: "Jayden DeCambre",
-    role: "iOS · XR",
-    bio: "SwiftUI app, Meta DAT SDK 0.6 integration, Gemini Live WebSocket client, Ray-Ban HUD design system, MediaPipe hand tracking.",
+    name: "Arthur Lee",
+    role: "Design · iOS · XR",
+    bio: "Design across the entire Retrace including SwiftUI app, Ray-Ban HUD design system. Content and storytelling as well.",
   },
 ];
 

@@ -122,10 +122,9 @@ export function Hero() {
           </h1>
 
           <p className="mt-10 max-w-2xl text-pretty text-lg leading-[1.55] text-muted lg:text-xl">
-            Record one expert demo. Coach every junior technician forever —
-            real-time voice + visual coaching through their smart glasses or
-            phone. The AI watches the work and verifies each step before it
-            advances.
+            Record one expert demo. Coach every junior technician forever.
+            Real-time voice + visual coaching through their smart glasses or
+            phone.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-3">

@@ -3,11 +3,11 @@ import { Section, SectionHeading } from "./primitives";
 const items = [
   {
     q: "Do I need smart glasses?",
-    a: "No. Retrace runs on iPhone today — the phone holds the direct Gemini Live session, audio and camera. Ray-Ban Meta is an optional capture layer for hands-free work. Glasses and phone are interchangeable per session.",
+    a: "No. Retrace runs on iPhone today. The phone holds the direct Gemini Live session, audio and camera. Ray-Ban Meta is an optional capture layer for hands-free work. Glasses and phone are interchangeable per session.",
   },
   {
     q: "What about the privacy of recorded video?",
-    a: "Expert recordings stay in your tenant. Voice and video stream peer-to-peer between the technician's phone and Gemini Live — the recording itself is only retained server-side when you publish it as a procedure. Ephemeral tokens scope every Live session to a single voice, tool set, and resumption handle.",
+    a: "Expert recordings stay in your tenant. Voice and video stream peer-to-peer between the technician's phone and Gemini Live. The recording is only retained server-side when you publish it as a procedure. Ephemeral tokens scope every Live session to a single voice, tool set, and resumption handle.",
   },
   {
     q: "Who owns the data?",
@@ -15,21 +15,21 @@ const items = [
   },
   {
     q: "How is this different from Aquant or Neuron7?",
-    a: "Aquant and Neuron7 are powerful service-intelligence tools you open on a phone or laptop after stopping the work. Retrace runs continuously through the technician's glasses or phone camera while they work — visual auto-advance, voice replies, no swivel-chair.",
+    a: "Aquant and Neuron7 are powerful service-intelligence tools you open on a phone or laptop after stopping the work. Retrace runs continuously through the technician's glasses or phone camera while they work: visual auto-advance, voice replies, no swivel-chair.",
   },
   {
     q: "How is this different from John Deere Service ADVISOR or Cat SIS?",
-    a: "Those are office and shop tools — searchable manuals, diagnostic codes, calibrations. They don't deliver real-time visual guidance on the equipment. Retrace is the layer on top: the technician's hands stay on the machine, the model watches, the procedure auto-advances when the completion criterion is visible.",
+    a: "Those are office and shop tools: searchable manuals, diagnostic codes, calibrations. They don't deliver real-time visual guidance on the equipment. Retrace is the layer on top: the technician's hands stay on the machine, the model watches, the procedure auto-advances when the completion criterion is visible.",
   },
   {
     q: "Deployment model?",
-    a: "Hackathon-stage today. iOS app on TestFlight, backend on AWS Lightsail (migrating to eu-central-1 before Berlin). Production deployment is a self-hosted FastAPI + your Gemini API tenant — no third-party data egress.",
+    a: "Hackathon-stage today. iOS app on TestFlight, backend on AWS Lightsail (migrating to eu-central-1 before Berlin). Production deployment is a self-hosted FastAPI + your Gemini API tenant. No third-party data egress.",
   },
 ];
 
 export function Faq() {
   return (
-    <Section id="faq" eyebrow="Questions we get">
+    <Section id="faq" eyebrow="Frequently Asked Questions (FAQ)">
       <SectionHeading title="Six questions, six straight answers." />
       <div className="overflow-hidden border border-stroke">
         {items.map((it, i) => (
