@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { DiamondMark } from "./primitives";
+import Image from "next/image";
 
 const TESTFLIGHT_URL = "https://testflight.apple.com/join/3wSB8VEu";
 
@@ -16,13 +16,17 @@ export function StickyNav() {
       <div className="shell flex h-14 items-center justify-between gap-6">
         <Link
           href="#top"
-          className="flex items-center gap-2.5 text-ink"
+          className="flex items-center text-ink"
           aria-label="Retrace home"
         >
-          <DiamondMark className="h-5 w-5" />
-          <span className="text-[15px] font-semibold tracking-tight">
-            retrace
-          </span>
+          <Image
+            src="/retrace-logo.svg"
+            alt="Retrace"
+            width={958}
+            height={180}
+            priority
+            className="h-5 w-auto"
+          />
         </Link>
         <nav className="hidden items-center gap-8 md:flex">
           {links.map((l) => (
