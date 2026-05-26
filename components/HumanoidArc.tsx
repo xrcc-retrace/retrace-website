@@ -49,23 +49,23 @@ const labs = [
 const differentiators = [
   {
     title: "First-person POV.",
-    body: "Same camera the humanoids will use. Ego4D had to convince 855 strangers to wear cameras around — Retrace's data comes from technicians whose existing capture habit is on-glasses or in-phone.",
+    body: "Same camera the humanoids will use. Ego4D had to convince 855 strangers to wear cameras around. Retrace's data comes from technicians whose existing capture habit is on-glasses or in-phone.",
   },
   {
     title: "Synchronized speech.",
-    body: "Narrated demos with timestamped transcripts. Most egocentric corpora are silent video — narration grounds intent and procedure.",
+    body: "Narrated demos with timestamped transcripts. Most egocentric corpora are silent video. Narration grounds intent and procedure.",
   },
   {
     title: "Tool-call ground-truth.",
-    body: "Explicit advance_step segmentation on completion criteria — explicit task boundaries are rare in public datasets and gold for downstream RL.",
+    body: "Explicit advance_step segmentation on completion criteria. Explicit task boundaries are rare in public datasets and gold for downstream RL.",
   },
   {
     title: "Paired attempts.",
-    body: "Expert demo + every learner attempt of the same task. Positive and negative samples paired by procedure — the kind of contrastive data RT-2 and π0 wish they had.",
+    body: "Expert demo + every learner attempt of the same task. Positive and negative samples paired by procedure. The kind of contrastive data RT-2 and π0 wish they had.",
   },
   {
     title: "Industrial verticals.",
-    body: "Field service, OEM equipment, skilled trades — exactly where Ego4D leans thin. The work humanoids will eventually be sold into.",
+    body: "Field service, OEM equipment, skilled trades. Exactly where Ego4D leans thin. The work humanoids will eventually be sold into.",
   },
 ];
 
@@ -87,7 +87,7 @@ export function HumanoidArc() {
             </span>
           </h2>
           <p className="mt-9 max-w-3xl text-pretty text-[17px] leading-[1.7] text-muted lg:text-[18px]">
-            Robotics labs aren't compute-starved — they're data-starved. The
+            Robotics labs aren't compute-starved. They're data-starved. The
             humanoid wave needs first-person video of humans doing useful
             work, paired with speech and task-completion ground truth. That's
             scarce. Most of what exists is consumer or household.

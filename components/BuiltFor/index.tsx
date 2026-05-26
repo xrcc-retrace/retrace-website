@@ -21,7 +21,7 @@ const verticals: Vertical[] = [
     claim:
       "Service ADVISOR and SIS lock diagnostics in the shop. Retrace puts them on the technician's face.",
     body:
-      "Real-time visual guidance through smart glasses, on the equipment, no swivel-chair. Embeds into the OEM's after-sales motion as a branded service layer — the technician's hands stay on the machine while the model watches.",
+      "Real-time visual guidance through smart glasses, on the equipment, no swivel-chair. Embeds into the OEM's after-sales motion as a branded service layer. The technician's hands stay on the machine while the model watches.",
     displaces: [
       "John Deere Service ADVISOR",
       "Caterpillar SIS",
@@ -36,7 +36,7 @@ const verticals: Vertical[] = [
     claim:
       "Poka trains workers through apps. Retrace trains them through their eyes.",
     body:
-      "One expert demo becomes adaptive visual coaching for every new hire, on the machine, not in a slide deck. The model watches the work and adjusts — it isn't a scripted checklist. New techs onboard in weeks, not months.",
+      "One expert demo becomes adaptive visual coaching for every new hire, on the machine, not in a slide deck. The model watches the work and adjusts. It isn't a scripted checklist. New techs onboard in weeks, not months.",
     displaces: ["Poka", "Augmentir", "Tulip"],
     buyer: "Plant ops director",
     buyerNote: "VP of operations · manufacturing site",

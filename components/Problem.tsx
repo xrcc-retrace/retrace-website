@@ -21,35 +21,68 @@ export function Problem() {
           <div className="max-w-[60ch]">
             <MonoLabel className="text-muted/70">The problem</MonoLabel>
             <h2 className="mt-4 text-balance text-3xl font-semibold leading-[1.12] tracking-[-0.025em] text-ink sm:text-4xl lg:text-[44px]">
-              Your senior technician walks out the door — and decades of
-              judgment walks out with him.
+              Your senior technician walks out the door. Decades of judgment
+              walk out with him.
             </h2>
 
             <div className="mt-10 space-y-7 text-pretty text-[17px] leading-[1.7] text-muted lg:text-[18px]">
               <p>
                 Half of process knowledge is held in people's heads. Roughly{" "}
-                <Datum value="42%" source="McKinsey" /> is tribal —
-                undocumented, lost the day they leave. The 600-page service
-                manual that's supposed to replace them is exhaustive and
-                unreadable in the moment.
+                <Datum value="42%" source="McKinsey" /> is tribal, undocumented,
+                lost the day they leave. The 600-page service manual that's
+                supposed to replace them is exhaustive and unreadable in the
+                moment.
               </p>
-              <p>
-                Junior technicians inherit it anyway. About{" "}
-                <Datum value="25%" source="Aberdeen" /> of failed dispatches
-                trace directly to a training gap — and the average repeat truck
-                roll costs <Datum value="$200–300" source="Industry avg" /> in
-                fuel and time before you count the customer's downtime.
-              </p>
-              <p>
-                Hiring more people would be the obvious answer, except the
-                people aren't there. The US manufacturing workforce is{" "}
-                <Datum value="44.8" source="BLS" /> years old on average — the
-                oldest it has ever been —  and faces{" "}
-                <Datum value="3.8M" source="Deloitte / MI" /> jobs by 2033 with
-                roughly half unfilled. Germany alone is short{" "}
-                <Datum value="5M" source="IW Köln" /> skilled workers by 2030.
-              </p>
+              <p>Junior technicians inherit the gap anyway.</p>
             </div>
+
+            <ul className="mt-8 flex flex-col">
+              {[
+                {
+                  label: "The Gap",
+                  body: (
+                    <>
+                      <span className="font-semibold text-ink">25%</span> of
+                      failed dispatches trace directly to a training gap.
+                    </>
+                  ),
+                },
+                {
+                  label: "The Cost",
+                  body: (
+                    <>
+                      The average repeat truck roll costs{" "}
+                      <span className="font-semibold text-ink">$300</span> in
+                      fuel and time, before counting customer downtime.
+                    </>
+                  ),
+                },
+                {
+                  label: "The Crunch",
+                  body: (
+                    <>
+                      The US manufacturing workforce is{" "}
+                      <span className="font-semibold text-ink">44.8</span> years
+                      old on average, the oldest it has ever been. By 2033, we
+                      face <span className="font-semibold text-ink">3.8M</span>{" "}
+                      jobs with roughly half left unfilled.
+                    </>
+                  ),
+                },
+              ].map((item) => (
+                <li
+                  key={item.label}
+                  className="grid grid-cols-[88px_1fr] items-baseline gap-5 border-t border-stroke py-5 first:border-t-0 lg:gap-7"
+                >
+                  <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-accent">
+                    {item.label}
+                  </span>
+                  <p className="text-pretty text-[16px] leading-[1.6] text-muted lg:text-[17px]">
+                    {item.body}
+                  </p>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Pull quote — single big breath, no boxed callout */}
@@ -63,7 +96,7 @@ export function Problem() {
               exist.
               <br />
               <span className="text-muted">
-                The only lever left is coaching the ones you have — faster.
+                The only lever left is coaching the ones you have, faster.
               </span>
             </blockquote>
             <div className="mt-8 inline-flex items-center gap-3">
