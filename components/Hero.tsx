@@ -147,6 +147,7 @@ export function Hero() {
           onPointerMove={onMove}
           onPointerLeave={onLeave}
           className="hero-canvas relative [perspective:1400px]"
+          data-cursor="hidden"
           aria-label="Interactive product preview — move your cursor to direct the AI's gaze"
         >
           {/* Reticle frame edges — fine bracket marks at the canvas corners */}
