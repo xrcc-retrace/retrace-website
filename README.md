@@ -22,16 +22,16 @@ Requires Node ≥ 20.
 
 ## How we ship
 
-**Rule:** the `main` branch is production. Nobody pushes to it directly. Every change reaches `main` through a PR from `develop`.
+`main` is production — merges to it auto-deploy to https://retracelab.com via Vercel.
+
+### Default flow: feature → develop → main
 
 ```
-feature-branch ──PR──> develop ──PR(CI-gated)──> main
-                          │                         │
-                          ▼                         ▼
-                  preview *.vercel.app        retracelab.com
+feature-branch ──PR──> develop ──PR──> main
+                          │              │
+                          ▼              ▼
+                  preview *.vercel.app  retracelab.com
 ```
-
-### Day-to-day workflow
 
 1. **Branch off `develop`** for any change:
    ```bash
@@ -40,16 +40,25 @@ feature-branch ──PR──> develop ──PR(CI-gated)──> main
    ```
 2. **Open a PR into `develop`**. CI runs `next build`. Vercel posts a preview URL to the PR.
 3. **Merge into `develop`** when CI is green. Preview at `develop-…vercel.app` updates automatically.
-4. **When `develop` is shippable**, open a PR from `develop` → `main`. Two status checks run: `build` and `enforce-main-source`.
+4. **When `develop` is shippable**, open a PR from `develop` → `main`.
 5. **Merge to main** → Vercel auto-deploys to `https://retracelab.com` within ~60s.
 
-### What you cannot do
+### Express path: feature → main
 
-- ❌ Push directly to `main` (blocked by branch protection — even for admins).
-- ❌ Open a PR to `main` from a feature branch (the `enforce-main-source` check rejects it).
-- ❌ Force-push or delete `main`.
+Direct pushes to `main` are allowed — no branch protection, no required PR. For small one-off changes where the preview cycle isn't worth it:
 
-If you need to bypass — don't. Open a PR through `develop`.
+```bash
+git checkout main && git pull
+git checkout -b fix/whatever
+# ... commit ...
+git push origin HEAD:main
+```
+
+⚠️ **Gotcha:** every push to `main` triggers `sync-develop`, which force-resets `develop` to match `main`. Unmerged commits on `develop` get orphaned (recoverable via reflog, but disruptive for anyone with in-flight develop work). Prefer the default flow when others are collaborating on `develop`.
+
+### Force-push and delete are still off-limits by convention
+
+There's no branch protection enforcing it now, but treat force-push to `main` and branch deletion as out-of-bounds.
 
 ### Automatic: develop re-syncs to main after every release
 
