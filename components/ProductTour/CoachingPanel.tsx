@@ -1,7 +1,7 @@
 import { MonoLabel } from "../primitives";
 
 const transcript = [
-  { from: "ai", text: "Loosen the housing bolts in diagonal pairs — two passes." },
+  { from: "ai", text: "Loosen the housing bolts in diagonal pairs, two passes." },
   { from: "tech", text: "Like this?" },
   { from: "ai", text: "Yes. Once they're each backed out one full turn, you're good to advance." },
   { from: "tool", text: "advance_step({ from: 2, to: 3, method: 'visual' })" },
@@ -86,7 +86,7 @@ export function CoachPanel() {
             <span className="text-muted">Vision verifies.</span>
           </h3>
           <p className="mt-7 max-w-md text-pretty text-[16px] leading-[1.6] text-muted lg:text-[17px]">
-            Phone or glasses hold a direct WebSocket to Gemini 3.1 Live — voice
+            Phone or glasses hold a direct WebSocket to Gemini 3.1 Live: voice
             and camera at ~0.5 fps. The model watches for the completion
             criterion and fires <code className="font-mono text-[14px] text-accent">advance_step</code>{" "}
             the moment it sees it. No server hop.

@@ -1,4 +1,5 @@
-import { DiamondMark, MonoLabel } from "./primitives";
+import Image from "next/image";
+import { MonoLabel } from "./primitives";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -6,10 +7,13 @@ export function Footer() {
     <footer className="border-t border-stroke">
       <div className="shell flex flex-col gap-6 py-12 sm:flex-row sm:items-end sm:justify-between">
         <div className="flex items-center gap-3">
-          <DiamondMark className="h-5 w-5" />
-          <span className="text-[15px] font-semibold tracking-tight text-ink">
-            retrace
-          </span>
+          <Image
+            src="/retrace-logo.svg"
+            alt="Retrace"
+            width={958}
+            height={180}
+            className="h-5 w-auto"
+          />
           <MonoLabel className="ml-3 text-muted/70">XRCC Berlin 2026</MonoLabel>
         </div>
         <div className="flex flex-col gap-1 sm:items-end">
