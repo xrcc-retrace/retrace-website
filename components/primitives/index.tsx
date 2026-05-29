@@ -141,7 +141,7 @@ export function Cta({
 }: {
   href: string;
   children: ReactNode;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "glass";
   external?: boolean;
   className?: string;
 }) {
@@ -150,7 +150,9 @@ export function Cta({
   const variants =
     variant === "primary"
       ? "bg-accent text-[#1a1300] hover:bg-accent/90"
-      : "border border-stroke-hi text-ink hover:bg-surface";
+      : variant === "glass"
+        ? "border border-white/10 bg-white/[0.06] backdrop-blur-md text-ink hover:bg-white/[0.10]"
+        : "border border-stroke-hi text-ink hover:bg-surface";
   return (
     <a
       href={href}

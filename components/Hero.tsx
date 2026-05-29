@@ -1,8 +1,8 @@
 "use client";
 
-import Image from "next/image";
-import { motion, useMotionValue, useMotionValueEvent, useSpring, useTransform } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import Dither from "./Dither";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
 import { ChipTag, Cta, MonoLabel } from "./primitives";
 import { DEMO_PROCEDURE } from "@/lib/procedure";
 
@@ -30,26 +30,8 @@ export function Hero() {
   const leftZ = useTransform(sx, [0, 1], [18, -8]);
   const rightZ = useTransform(sx, [0, 1], [-8, 18]);
 
-  // Drive CSS vars on the container — keeps reticle position in screen-space
-  // without re-rendering React on every frame.
-  useMotionValueEvent(sx, "change", (v) => {
-    containerRef.current?.style.setProperty("--rx", `${v * 100}%`);
-  });
-  useMotionValueEvent(sy, "change", (v) => {
-    containerRef.current?.style.setProperty("--ry", `${v * 100}%`);
-  });
-
   const [zone, setZone] = useState<Zone>("idle");
   const [activeStep, setActiveStep] = useState(2); // 0-indexed → step 3
-  const [coord, setCoord] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    // Initialize CSS vars so reticle has a sensible default position
-    const el = containerRef.current;
-    if (!el) return;
-    el.style.setProperty("--rx", "50%");
-    el.style.setProperty("--ry", "50%");
-  }, []);
 
   function onMove(e: React.PointerEvent<HTMLDivElement>) {
     const rect = containerRef.current?.getBoundingClientRect();
@@ -65,12 +47,6 @@ export function Hero() {
 
     const step = Math.min(STEP_COUNT - 1, Math.max(0, Math.floor(ry * STEP_COUNT)));
     setActiveStep(step);
-
-    // Display readout in frame/object coordinates
-    setCoord({
-      x: Math.round(rx * 1280),
-      y: Math.round(ry * 720),
-    });
   }
 
   function onLeave() {
@@ -78,8 +54,6 @@ export function Hero() {
     my.set(0.5);
     setZone("idle");
   }
-
-  const reticleVisible = zone !== "idle";
 
   return (
     <section
@@ -91,18 +65,20 @@ export function Hero() {
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 h-[800px] bg-[radial-gradient(circle_at_50%_-10%,rgba(255,194,28,0.10),transparent_55%)]"
       />
-      {/* Fine grid */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            "linear-gradient(var(--ink) 1px, transparent 1px), linear-gradient(90deg, var(--ink) 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
-          maskImage:
-            "radial-gradient(circle at 50% 30%, black 30%, transparent 75%)",
-        }}
-      />
+      {/* Dither background */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <Dither
+          waveColor={[0.5, 0.5, 0.5]}
+          enableMouseInteraction={true}
+          disableAnimation={false}
+          colorNum={11.5}
+          waveAmplitude={0.18}
+          waveFrequency={6.2}
+          waveSpeed={0.05}
+          pixelSize={2}
+          mouseRadius={0.1}
+        />
+      </div>
 
       <div className="shell relative">
         {/* Copy block — single column, generous, no card preview */}
@@ -134,7 +110,7 @@ export function Hero() {
             </Cta>
             <Cta
               href="mailto:jacogoby@gmail.com,ykarthurlee@gmail.com?subject=Retrace%20pilot%20conversation"
-              variant="secondary"
+              variant="glass"
             >
               Book a pilot
             </Cta>
@@ -300,24 +276,6 @@ export function Hero() {
           </motion.div>
 
           {/* Reticle — sits in screen-space, no tilt */}
-          <div
-            className={`hero-reticle pointer-events-none absolute transition-opacity duration-200 ${
-              reticleVisible ? "opacity-100" : "opacity-0"
-            }`}
-            aria-hidden
-          >
-            <ReticleMark />
-            <div className="absolute left-7 top-7 whitespace-nowrap rounded-[3px] border border-accent/40 bg-canvas/80 px-2 py-1 font-mono text-[10px] tracking-[0.12em] text-accent backdrop-blur">
-              {zone === "left" && <>TRACKING · OBJECT&nbsp;03</>}
-              {zone === "right" && <>READ&nbsp;STEP · {String(activeStep + 1).padStart(2, "0")} / {STEP_COUNT}</>}
-              {zone === "center" && <>ADVANCE_STEP · candidate</>}
-              {" · "}
-              <span className="text-muted">
-                {coord.x.toString().padStart(4, "0")} · {coord.y.toString().padStart(4, "0")}
-              </span>
-            </div>
-          </div>
-
           {/* Hairline connector — visible in center zone */}
           <svg
             className={`pointer-events-none absolute inset-0 h-full w-full transition-opacity duration-300 ${
@@ -357,50 +315,7 @@ export function Hero() {
         </div>
       </div>
 
-      <style jsx>{`
-        @media (hover: none), (pointer: coarse) {
-          .hero-reticle {
-            display: none;
-          }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .hero-reticle {
-            display: none;
-          }
-        }
-        .hero-reticle {
-          left: var(--rx, 50%);
-          top: var(--ry, 50%);
-          transform: translate(-50%, -50%);
-          z-index: 30;
-        }
-      `}</style>
     </section>
-  );
-}
-
-function ReticleMark() {
-  return (
-    <svg
-      width="56"
-      height="56"
-      viewBox="0 0 56 56"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      {/* Corner brackets */}
-      <path d="M2 12 L2 2 L12 2" stroke="var(--accent)" strokeWidth="1.5" />
-      <path d="M44 2 L54 2 L54 12" stroke="var(--accent)" strokeWidth="1.5" />
-      <path d="M54 44 L54 54 L44 54" stroke="var(--accent)" strokeWidth="1.5" />
-      <path d="M12 54 L2 54 L2 44" stroke="var(--accent)" strokeWidth="1.5" />
-      {/* Crosshair */}
-      <line x1="28" y1="22" x2="28" y2="26" stroke="var(--accent)" strokeWidth="1.5" />
-      <line x1="28" y1="30" x2="28" y2="34" stroke="var(--accent)" strokeWidth="1.5" />
-      <line x1="22" y1="28" x2="26" y2="28" stroke="var(--accent)" strokeWidth="1.5" />
-      <line x1="30" y1="28" x2="34" y2="28" stroke="var(--accent)" strokeWidth="1.5" />
-      {/* Center dot */}
-      <circle cx="28" cy="28" r="1" fill="var(--accent)" />
-    </svg>
   );
 }
 
