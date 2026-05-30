@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { DiamondMark } from "./primitives";
+import { MobileNav } from "./MobileNav";
 
 const TESTFLIGHT_URL = "https://testflight.apple.com/join/3wSB8VEu";
 
@@ -27,9 +28,12 @@ export function StickyNav() {
   return (
     <header className="pointer-events-none fixed inset-x-0 top-4 z-50">
       <div className="shell relative flex items-center justify-center">
-        {/* Center pill — logo + (disabled) links */}
+        {/* Mobile — collapse/expand glass menu (below sm) */}
+        <MobileNav className="absolute inset-x-[var(--gutter)] top-0 sm:hidden" />
+
+        {/* Center pill — logo + (disabled) links (sm and up) */}
         <nav
-          className="pointer-events-auto flex items-center gap-4 rounded-full border border-white/10 bg-white/[0.06] py-2 pl-3 pr-5 backdrop-blur-md sm:gap-6 sm:pr-6"
+          className="pointer-events-auto hidden items-center gap-4 rounded-full border border-white/10 bg-white/[0.06] py-2 pl-3 pr-5 backdrop-blur-md sm:flex sm:gap-6 sm:pr-6"
           aria-label="Primary"
         >
           <span className="flex items-center text-ink" aria-label="Retrace home">
