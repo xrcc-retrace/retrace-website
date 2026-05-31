@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { DiamondMark } from "./primitives";
 import { MobileNav } from "./MobileNav";
 
 const TESTFLIGHT_URL = "https://testflight.apple.com/join/3wSB8VEu";
@@ -36,8 +35,8 @@ export function StickyNav() {
           className="pointer-events-auto hidden items-center gap-4 rounded-full border border-white/10 bg-white/[0.06] py-2 pl-3 pr-5 backdrop-blur-md sm:flex sm:gap-6 sm:pr-6"
           aria-label="Primary"
         >
-          <span className="flex items-center text-ink" aria-label="Retrace home">
-            <DiamondMark className="h-5 w-5" />
+          <span className="flex items-center" aria-label="Retrace home">
+            <img src="/LogoIcon.svg" className="h-5 w-5" alt="" aria-hidden />
           </span>
           {links.map((l) => (
             <span

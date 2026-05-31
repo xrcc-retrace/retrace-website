@@ -1,4 +1,5 @@
 import { MonoLabel } from "./primitives";
+import { SplineRobot } from "./SplineRobot";
 
 // Inline-cited datum — same pattern as Problem.tsx, kept local to avoid
 // importing across components.
@@ -77,35 +78,47 @@ export function HumanoidArc() {
     >
       {/* Opener */}
       <div className="shell py-24 lg:py-32">
-        <div className="max-w-4xl">
-          <MonoLabel className="text-muted/70">The longer arc</MonoLabel>
-          <h2 className="mt-4 text-balance text-3xl font-semibold leading-[1.06] tracking-[-0.025em] text-ink sm:text-4xl lg:text-[56px]">
-            AI copilot for technicians today.
-            <br />
-            <span className="text-accent">
-              Training corpus for humanoids tomorrow.
-            </span>
-          </h2>
-          <p className="mt-9 max-w-3xl text-pretty text-[17px] leading-[1.7] text-muted lg:text-[18px]">
-            Robotics labs aren't compute-starved. They're data-starved. The
-            humanoid wave needs first-person video of humans doing useful
-            work, paired with speech and task-completion ground truth. That's
-            scarce. Most of what exists is consumer or household.
-          </p>
-          <p className="mt-5 max-w-3xl text-pretty text-[17px] leading-[1.7] text-muted lg:text-[18px]">
-            The public benchmarks tell the story.{" "}
-            <Datum value="3,670 hrs" source="Ego4D · Meta '22" /> of egocentric
-            video across 9 countries.{" "}
-            <Datum value="1,422 hrs" source="Ego-Exo4D · Meta '23" /> of paired
-            first-person + third-person footage.{" "}
-            <Datum value="76K demos" source="DROID · Stanford '24" /> of robot
-            manipulation across 86 tasks.{" "}
-            <Datum value="1M+ episodes" source="Open X-Embodiment · DeepMind '23" />{" "}
-            spanning 22 different embodiments. All landmark releases. None
-            indexed by industrial procedure, none paired with expert
-            narration, none capturing the long tail of skilled-trade tasks
-            that pay the labs' bills.
-          </p>
+        <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+          {/* Left — copy */}
+          <div>
+            <MonoLabel className="text-muted/70">The longer arc</MonoLabel>
+            <h2 className="mt-4 text-balance text-3xl font-semibold leading-[1.06] tracking-[-0.025em] text-ink sm:text-4xl lg:text-[56px]">
+              AI copilot for technicians today.
+              <br />
+              <span className="text-accent">
+                Training corpus for humanoids tomorrow.
+              </span>
+            </h2>
+            <p className="mt-9 text-pretty text-[17px] leading-[1.7] text-muted lg:text-[18px]">
+              Robotics labs aren't compute-starved. They're data-starved. The
+              humanoid wave needs first-person video of humans doing useful
+              work, paired with speech and task-completion ground truth. That's
+              scarce. Most of what exists is consumer or household.
+            </p>
+            <p className="mt-5 text-pretty text-[17px] leading-[1.7] text-muted lg:text-[18px]">
+              The public benchmarks tell the story.{" "}
+              <Datum value="3,670 hrs" source="Ego4D · Meta '22" /> of egocentric
+              video across 9 countries.{" "}
+              <Datum value="1,422 hrs" source="Ego-Exo4D · Meta '23" /> of paired
+              first-person + third-person footage.{" "}
+              <Datum value="76K demos" source="DROID · Stanford '24" /> of robot
+              manipulation across 86 tasks.{" "}
+              <Datum value="1M+ episodes" source="Open X-Embodiment · DeepMind '23" />{" "}
+              spanning 22 different embodiments. All landmark releases. None
+              indexed by industrial procedure, none paired with expert
+              narration, none capturing the long tail of skilled-trade tasks
+              that pay the labs' bills.
+            </p>
+          </div>
+
+          {/* Right — cursor-following 3D robot */}
+          <div className="relative h-[380px] overflow-hidden rounded-lg bg-canvas sm:h-[440px] lg:h-[520px]">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0"
+            />
+            <SplineRobot className="absolute inset-0 h-full w-full" />
+          </div>
         </div>
       </div>
 
