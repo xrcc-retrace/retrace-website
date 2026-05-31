@@ -23,7 +23,7 @@ export function PostModal({
 }
 
 function ModalInner({ post, onClose }: { post: BlogPost; onClose: () => void }) {
-  const [isDesktop, setIsDesktop] = useState(true);
+  const [isDesktop, setIsDesktop] = useState(false);
   const [reduced, setReduced] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
 

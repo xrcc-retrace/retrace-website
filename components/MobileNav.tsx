@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Plus, Download, Play } from "lucide-react";
 import { TESTFLIGHT_URL, TRAILER_URL } from "@/lib/links";
 
@@ -15,6 +16,7 @@ const GLASS = "border border-white/10 bg-white/[0.06] backdrop-blur-md";
 
 export function MobileNav({ className = "" }: { className?: string }) {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
   // Escape closes; lock body scroll while open.
   useEffect(() => {
@@ -51,12 +53,15 @@ export function MobileNav({ className = "" }: { className?: string }) {
           aria-label={open ? "Close menu" : "Open menu"}
           className="flex shrink-0 items-center justify-between px-6 py-4 text-left"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/retrace-logo.svg"
-            alt="Retrace"
-            className="h-7 w-auto"
-          />
+          <Link
+            href="/"
+            aria-label="Retrace home"
+            onClick={(e) => e.stopPropagation()}
+            className="flex items-center"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/retrace-logo.svg" alt="Retrace" className="h-7 w-auto" />
+          </Link>
           <Plus
             className={`size-6 text-ink transition-transform duration-[320ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${
               open ? "rotate-45" : "rotate-0"
@@ -75,9 +80,10 @@ export function MobileNav({ className = "" }: { className?: string }) {
             open ? "opacity-100 delay-150" : "pointer-events-none opacity-0"
           }`}
         >
-          {navLinks.map((l, i) => {
+          {navLinks.map((l) => {
+            const isActive = l.href === pathname;
             const cls = `select-none text-[44px] tracking-[-0.35px] leading-[1.1] ${
-              i === 0 ? "font-normal text-ink" : "font-light text-white/70"
+              isActive ? "font-normal text-ink" : "font-light text-white/70"
             }`;
             return l.href ? (
               <Link

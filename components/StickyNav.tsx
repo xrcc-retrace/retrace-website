@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { MobileNav } from "./MobileNav";
 import { TESTFLIGHT_URL } from "@/lib/links";
 
@@ -12,6 +13,7 @@ const links: { label: string; href?: string }[] = [
 
 export function StickyNav() {
   const [showCta, setShowCta] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const hero = document.getElementById("top");
@@ -35,15 +37,17 @@ export function StickyNav() {
           className="pointer-events-auto hidden items-center gap-4 rounded-full border border-white/10 bg-white/[0.06] py-2 pl-3 pr-5 backdrop-blur-md sm:flex sm:gap-6 sm:pr-6"
           aria-label="Primary"
         >
-          <span className="flex items-center" aria-label="Retrace home">
+          <Link href="/" aria-label="Retrace home" className="flex items-center">
             <img src="/LogoIcon.svg" className="h-5 w-5" alt="" aria-hidden />
-          </span>
+          </Link>
           {links.map((l) =>
             l.href ? (
               <Link
                 key={l.label}
                 href={l.href}
-                className="select-none whitespace-nowrap text-[13px] font-medium text-muted transition-colors hover:text-ink sm:text-[15px]"
+                className={`select-none whitespace-nowrap text-[13px] font-medium transition-colors sm:text-[15px] ${
+                  pathname === l.href ? "text-ink" : "text-muted hover:text-ink"
+                }`}
               >
                 {l.label}
               </Link>
