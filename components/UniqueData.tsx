@@ -1,62 +1,94 @@
-import { MonoLabel } from "./primitives";
+import { Eye, AudioLines, ListChecks, RotateCcw, Factory } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import BorderGlow from "./BorderGlow";
 
-const differentiators = [
+const differentiators: {
+  title: string;
+  body: string;
+  icon: LucideIcon;
+}[] = [
   {
-    title: "First-person POV.",
+    title: "First-person POV",
     body: "Same camera the humanoids will use. Ego4D had to convince 855 strangers to wear cameras around. Retrace's data comes from technicians whose existing capture habit is on-glasses or in-phone.",
+    icon: Eye,
   },
   {
-    title: "Synchronized speech.",
-    body: "Narrated demos with timestamped transcripts. Most egocentric corpora are silent video. Narration grounds intent and procedure.",
+    title: "Spoken explanations",
+    body: "Every video is paired with a live, real-time spoken narration explaining exactly why a person is performing an action, connecting visual movement to human intent.",
+    icon: AudioLines,
   },
   {
-    title: "Tool-call ground-truth.",
-    body: "Explicit advance_step segmentation on completion criteria. Explicit task boundaries are rare in public datasets and gold for downstream RL.",
+    title: "Clear step boundaries",
+    body: "The system records precise markers the exact moment a task step is completed successfully, giving AI models perfect proof of what a job done right looks like.",
+    icon: ListChecks,
   },
   {
-    title: "Paired attempts.",
-    body: "Expert demo + every learner attempt of the same task. Positive and negative samples paired by procedure. The kind of contrastive data RT-2 and π0 wish they had.",
+    title: "Learning from mistakes",
+    body: "By capturing both the perfect expert demo and the real-world corrections made by beginners, the data teaches AI how to spot errors and self-correct mid-task.",
+    icon: RotateCcw,
   },
   {
-    title: "Industrial verticals.",
+    title: "Industrial verticals",
     body: "Field service, OEM equipment, skilled trades. Exactly where Ego4D leans thin. The work humanoids will eventually be sold into.",
+    icon: Factory,
   },
 ];
+
+function Card({ title, body, icon: Icon }: (typeof differentiators)[number]) {
+  return (
+    <BorderGlow
+      backgroundColor="var(--bg-surface)"
+      borderColor="var(--stroke)"
+      borderRadius={12}
+      glowColor="44 100 55"
+      colors={["#FFC21C", "#E0860F", "#FFE9B0"]}
+      glowRadius={40}
+      animated
+      className="h-full"
+    >
+      <div className="flex flex-col gap-5 p-6 lg:p-8">
+        <Icon className="size-6 text-accent" strokeWidth={1.5} />
+        <div>
+          <div className="text-[18px] font-semibold tracking-tight text-ink lg:text-[20px]">
+            {title}
+          </div>
+          <p className="mt-2 text-pretty text-[15px] leading-[1.65] text-muted lg:text-[16px]">
+            {body}
+          </p>
+        </div>
+      </div>
+    </BorderGlow>
+  );
+}
 
 export function UniqueData() {
   return (
     <section id="unique-data" className="border-t border-stroke">
       <div className="shell py-24 lg:py-32">
-        <div className="grid items-start gap-12 lg:grid-cols-[2fr_3fr] lg:gap-20">
-          <div className="lg:sticky lg:top-32">
-            <MonoLabel className="text-muted/70">
-              What Retrace's data is, that nobody else's is
-            </MonoLabel>
-            <h3 className="mt-4 text-balance text-2xl font-semibold leading-[1.15] tracking-[-0.018em] text-ink lg:text-[32px]">
-              Five attributes the public corpora don't have together.
-            </h3>
-          </div>
+        <div className="mx-auto max-w-2xl text-center">
+          <h3 className="text-balance font-light leading-[1.15] tracking-[-0.018em] text-ink text-3xl sm:text-4xl lg:text-[56px]">
+            Five elements. One irreplaceable asset.
+          </h3>
+          <p className="mx-auto mt-6 max-w-xl text-pretty text-[16px] leading-[1.65] text-muted lg:text-[18px]">
+            When you combine first-person sight, spoken intent, and real
+            industrial tasks, you get a highly specialized dataset that cannot be
+            scraped from the web or replicated in a lab.
+          </p>
+        </div>
 
-          <ol className="flex flex-col">
-            {differentiators.map((d, i) => (
-              <li
-                key={d.title}
-                className="grid grid-cols-[40px_1fr] items-start gap-5 border-t border-stroke py-7 first:border-t-0 lg:gap-7 lg:py-8"
-              >
-                <span className="pt-1 font-mono text-[11px] tracking-[0.16em] text-muted/60">
-                  0{i + 1}
-                </span>
-                <div>
-                  <div className="text-[18px] font-semibold tracking-tight text-ink lg:text-[20px]">
-                    {d.title}
-                  </div>
-                  <p className="mt-2 text-pretty text-[15px] leading-[1.65] text-muted lg:text-[16px]">
-                    {d.body}
-                  </p>
-                </div>
-              </li>
+        <div className="mt-14 flex flex-col gap-4 lg:mt-20">
+          {/* top row: 2 wide */}
+          <div className="grid gap-4 lg:grid-cols-2">
+            {differentiators.slice(0, 2).map((d) => (
+              <Card key={d.title} {...d} />
             ))}
-          </ol>
+          </div>
+          {/* bottom row: 3 */}
+          <div className="grid gap-4 lg:grid-cols-3">
+            {differentiators.slice(2).map((d) => (
+              <Card key={d.title} {...d} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
