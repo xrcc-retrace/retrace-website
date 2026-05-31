@@ -6,51 +6,35 @@ import { MonoLabel } from "../primitives";
 
 type Vertical = {
   id: string;
-  chip: string;
-  claim: string;
+  tab: string;
   body: string;
-  displaces: string[];
-  buyer: string;
-  buyerNote: string;
+  idealFor: string;
 };
 
 const verticals: Vertical[] = [
   {
     id: "service",
-    chip: "Service & Repair",
-    claim:
-      "Service ADVISOR and SIS lock diagnostics in the shop. Retrace puts them on the technician's face.",
+    tab: "Equipment Service & Repair",
     body:
-      "Real-time visual guidance through smart glasses, on the equipment, no swivel-chair. Embeds into the OEM's after-sales motion as a branded service layer. The technician's hands stay on the machine while the model watches.",
-    displaces: [
-      "John Deere Service ADVISOR",
-      "Caterpillar SIS",
-      "Schneider Remote Expertise",
-    ],
-    buyer: "OEM product lead",
-    buyerNote: "VP of after-sales · service organization",
+      "Retrace moves diagnostic data from back-office screens straight to the technician’s eyes. The AI watches the live repair, giving hands-free visual guidance so technicians can fix complex machinery without looking away from the equipment.",
+    idealFor:
+      "Equipment manufacturers, service directors, and technical support leads.",
   },
   {
     id: "onboarding",
-    chip: "Onboarding & Upskilling",
-    claim:
-      "Poka trains workers through apps. Retrace trains them through their eyes.",
+    tab: "Onboarding & Training",
     body:
-      "One expert demo becomes adaptive visual coaching for every new hire, on the machine, not in a slide deck. The model watches the work and adjusts. It isn't a scripted checklist. New techs onboard in weeks, not months.",
-    displaces: ["Poka", "Augmentir", "Tulip"],
-    buyer: "Plant ops director",
-    buyerNote: "VP of operations · manufacturing site",
+      "Transform one expert recording into an active, on-the-floor mentor for every new hire. The AI tracks real-time progress and guides learners at their own pace, replacing boring classroom slideshows with confident, on-the-job training.",
+    idealFor:
+      "Plant managers, operational directors, and training supervisors.",
   },
   {
     id: "field",
-    chip: "Field-Service Copilot",
-    claim:
-      "Aquant and Neuron7 are tools you open on a phone. Retrace stays on the work.",
+    tab: "Field-Service Assistance",
     body:
-      "Eyeball-on-target voice + vision through glasses or phone, real-time auto-advance, troubleshoot for the unknown. One expert demo replaces the institutional-data backfill those tools require to deliver an answer.",
-    displaces: ["Aquant.ai", "Neuron7.ai"],
-    buyer: "CSO / SVP of Global Services",
-    buyerNote: "Cost-center owner · enterprise OEM",
+      "Equip your field team with a smart partner that looks through their camera to troubleshoot unexpected breakdowns. It scans your library to find verified solutions instantly, eliminating costly guesswork out in the wild.",
+    idealFor:
+      "Field operations leaders, global service executives, and remote support teams.",
   },
 ];
 
@@ -63,48 +47,48 @@ export function BuiltFor() {
       id="built-for"
       className="relative border-t border-stroke bg-surface/20"
     >
-      <div className="shell py-24 lg:py-40">
-        <div className="mb-12 flex flex-col gap-7 lg:mb-16 lg:flex-row lg:items-end lg:justify-between">
-          <h2 className="max-w-[18ch] text-balance text-3xl font-semibold leading-[1.08] tracking-[-0.025em] text-ink sm:text-4xl lg:text-[52px]">
-            One wedge.
-            <br />
-            <span className="text-muted">Pick the pain you own.</span>
-          </h2>
+      <div className="shell flex flex-col items-center py-24 text-center lg:py-40">
+        {/* Header */}
+        <h2 className="mx-auto max-w-[20ch] text-balance font-light leading-[1.1] tracking-[-0.025em] text-ink text-3xl sm:text-4xl lg:text-[56px]">
+          One platform. Infinite operational possibilities.
+        </h2>
+        <p className="mx-auto mt-5 max-w-2xl text-pretty text-[16px] leading-[1.6] text-muted lg:text-[18px]">
+          Deploy Retrace wherever your team needs eyes-on-the-job intelligence.
+        </p>
 
-          {/* Tab strip */}
-          <div
-            role="tablist"
-            aria-label="Choose a buyer persona"
-            className="inline-flex flex-wrap items-center gap-1 self-start rounded-full border border-stroke bg-canvas p-1"
-          >
-            {verticals.map((v) => (
-              <button
-                key={v.id}
-                role="tab"
-                aria-selected={activeId === v.id}
-                aria-controls={`panel-${v.id}`}
-                onClick={() => setActiveId(v.id)}
-                className={`relative rounded-full px-4 py-2 text-[13px] font-medium transition-colors ${
-                  activeId === v.id
-                    ? "text-[#1a1300]"
-                    : "text-muted hover:text-ink"
-                }`}
-              >
-                {activeId === v.id && (
-                  <motion.span
-                    layoutId="builtfor-pill"
-                    className="absolute inset-0 rounded-full bg-accent"
-                    transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                  />
-                )}
-                <span className="relative z-10">{v.chip}</span>
-              </button>
-            ))}
-          </div>
+        {/* Segmented control */}
+        <div
+          role="tablist"
+          aria-label="Choose a deployment scenario"
+          className="mx-auto mt-10 flex max-w-full items-stretch gap-1 self-stretch overflow-x-auto rounded-full border border-stroke bg-canvas p-1 sm:mt-12 sm:self-auto"
+        >
+          {verticals.map((v) => (
+            <button
+              key={v.id}
+              role="tab"
+              aria-selected={activeId === v.id}
+              aria-controls={`panel-${v.id}`}
+              onClick={() => setActiveId(v.id)}
+              className={`relative flex-1 whitespace-nowrap rounded-full px-4 py-2.5 text-[12px] font-medium transition-colors sm:px-6 sm:text-[14px] ${
+                activeId === v.id
+                  ? "text-[#1a1300]"
+                  : "text-muted hover:text-ink"
+              }`}
+            >
+              {activeId === v.id && (
+                <motion.span
+                  layoutId="builtfor-pill"
+                  className="absolute inset-0 rounded-full bg-accent"
+                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )}
+              <span className="relative z-10">{v.tab}</span>
+            </button>
+          ))}
         </div>
 
         {/* Panel */}
-        <div className="relative min-h-[360px] lg:min-h-[320px]">
+        <div className="relative mt-10 min-h-[240px] w-full sm:mt-12 sm:min-h-[200px]">
           <AnimatePresence mode="wait">
             <motion.div
               key={active.id}
@@ -114,45 +98,17 @@ export function BuiltFor() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-              className="grid gap-12 lg:grid-cols-[1.5fr_1fr] lg:gap-20"
+              className="flex flex-col items-center"
             >
-              <div className="max-w-3xl">
-                <h3 className="text-balance text-[26px] font-semibold leading-[1.15] tracking-[-0.018em] text-ink lg:text-[40px]">
-                  {active.claim}
-                </h3>
-                <p className="mt-7 text-pretty text-[16px] leading-[1.65] text-muted lg:text-[18px]">
-                  {active.body}
+              <p className="mx-auto text-pretty max-w-2xl text-left text-[18px] leading-[1.6] text-ink lg:text-[20px]">
+                {active.body}
+              </p>
+              <div className="mx-auto mt-7 flex w-full max-w-2xl flex-col items-start gap-2">
+                <MonoLabel>Ideal for</MonoLabel>
+                <p className="text-[14.5px] text-left text-muted">
+                  {active.idealFor}
                 </p>
               </div>
-
-              <aside className="flex flex-col gap-7 lg:border-l lg:border-stroke lg:pl-12">
-                <div>
-                  <MonoLabel>Displaces</MonoLabel>
-                  <ul className="mt-3 flex flex-col gap-1.5">
-                    {active.displaces.map((d) => (
-                      <li
-                        key={d}
-                        className="flex items-center gap-2.5 text-[14.5px] text-ink"
-                      >
-                        <span
-                          aria-hidden
-                          className="inline-block h-px w-3 bg-stroke-hi"
-                        />
-                        {d}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <MonoLabel>Buyer</MonoLabel>
-                  <div className="mt-2 text-[16px] font-medium text-ink">
-                    {active.buyer}
-                  </div>
-                  <div className="mt-1 text-[13px] text-muted">
-                    {active.buyerNote}
-                  </div>
-                </div>
-              </aside>
             </motion.div>
           </AnimatePresence>
         </div>
