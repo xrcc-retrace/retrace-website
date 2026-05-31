@@ -6,6 +6,14 @@ import { TOUR_STEPS } from "./tourSteps";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+function StepEyebrow({ num, kicker }: { num: string; kicker: string }) {
+  return (
+    <div className="font-mono text-[11px] tracking-[0.2em] text-muted">
+      {num} / {kicker.toUpperCase()}
+    </div>
+  );
+}
+
 export function ProductTourClient() {
   // SSR / first paint renders the mobile stack — this is also the no-JS
   // fallback and avoids mounting both video sets at once. We upgrade to the
@@ -91,9 +99,7 @@ function TourDesktop({ reducedMotion }: { reducedMotion: boolean }) {
                 transition={{ duration: 0.35, ease: EASE }}
                 className="absolute left-0 top-1 bottom-1 w-px origin-center bg-accent"
               />
-              <div className="font-mono text-[11px] tracking-[0.2em] text-muted">
-                {step.num} / {step.kicker.toUpperCase()}
-              </div>
+              <StepEyebrow num={step.num} kicker={step.kicker} />
               <h3
                 className={`mt-3 text-balance text-3xl font-medium leading-[1.08] tracking-[-0.02em] transition-colors duration-300 lg:text-[36px] ${
                   isActive ? "text-ink" : "text-muted/55"
@@ -154,9 +160,7 @@ function TourMobile() {
         return (
           <div key={step.id} className="flex flex-col">
             <div className="relative">
-              <div className="font-mono text-[11px] tracking-[0.2em] text-muted">
-                {step.num} / {step.kicker.toUpperCase()}
-              </div>
+              <StepEyebrow num={step.num} kicker={step.kicker} />
               <h3 className="mt-2 text-balance text-3xl font-medium leading-[1.08] tracking-[-0.02em] text-ink sm:text-4xl">
                 {step.header}
               </h3>

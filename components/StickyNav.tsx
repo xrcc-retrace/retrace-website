@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { MobileNav } from "./MobileNav";
-
-const TESTFLIGHT_URL = "https://testflight.apple.com/join/3wSB8VEu";
+import { TESTFLIGHT_URL } from "@/lib/links";
 
 const links = [
   { label: "How to Vote" },

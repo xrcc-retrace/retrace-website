@@ -2,10 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Plus, Download, Play } from "lucide-react";
-
-const TESTFLIGHT_URL = "https://testflight.apple.com/join/3wSB8VEu";
-const TRAILER_URL =
-  "https://drive.google.com/file/d/1zvRnLul5eNXFzZw67pSLdawgPnB8gdAX/view?usp=sharing";
+import { TESTFLIGHT_URL, TRAILER_URL } from "@/lib/links";
 
 const navLinks = ["Home", "How to Vote", "Blog"];
 

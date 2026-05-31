@@ -2,9 +2,7 @@
 
 import { Cta } from "./primitives";
 import PixelCard from "./PixelCard";
-
-const TESTFLIGHT_URL = "https://testflight.apple.com/join/3wSB8VEu";
-const EMAILS = ["jacogoby@gmail.com", "ykarthurlee@gmail.com"];
+import { TESTFLIGHT_URL, EMAILS } from "@/lib/links";
 
 export function FinalCTA() {
   return (

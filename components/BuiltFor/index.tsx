@@ -69,7 +69,7 @@ export function BuiltFor() {
               aria-selected={activeId === v.id}
               aria-controls={`panel-${v.id}`}
               onClick={() => setActiveId(v.id)}
-              className={`relative flex-1 whitespace-nowrap rounded-full px-4 py-2.5 text-[12px] font-medium transition-colors sm:px-6 sm:text-[14px] ${
+              className={`relative flex-none whitespace-nowrap rounded-full px-4 py-2.5 text-[12px] font-medium transition-colors sm:px-6 sm:text-[14px] ${
                 activeId === v.id
                   ? "text-[#1a1300]"
                   : "text-muted hover:text-ink"

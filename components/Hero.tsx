@@ -1,9 +1,10 @@
 "use client";
 
-import Dither from "./Dither";
+import dynamic from "next/dynamic";
 import { Cta } from "./primitives";
+import { TESTFLIGHT_URL, MAILTO_URL } from "@/lib/links";
 
-const TESTFLIGHT_URL = "https://testflight.apple.com/join/3wSB8VEu";
+const Dither = dynamic(() => import("./Dither"), { ssr: false });
 
 export function Hero() {
   return (
@@ -53,7 +54,7 @@ export function Hero() {
               <span aria-hidden>→</span>
             </Cta>
             <Cta
-              href="mailto:jacogoby@gmail.com,ykarthurlee@gmail.com?subject=Retrace%20pilot%20conversation"
+              href={MAILTO_URL}
               variant="glass"
             >
               Book a pilot

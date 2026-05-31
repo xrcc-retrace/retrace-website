@@ -140,22 +140,25 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
         window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
 
     let played = false;
+    let cancelled = false;
+    const guard = (fn: (v: number) => void) => (v: number) => { if (!cancelled) fn(v); };
+
     const playSweep = () => {
       const angleStart = 110;
       const angleEnd = 465;
       setSweepActive(true);
       setCursorAngle(angleStart);
 
-      animateValue({ duration: 500, onUpdate: v => setEdgeProximity(v / 100) });
-      animateValue({ ease: easeInCubic, duration: 1500, end: 50, onUpdate: v => {
+      animateValue({ duration: 500, onUpdate: guard(v => setEdgeProximity(v / 100)) });
+      animateValue({ ease: easeInCubic, duration: 1500, end: 50, onUpdate: guard(v => {
         setCursorAngle((angleEnd - angleStart) * (v / 100) + angleStart);
-      }});
-      animateValue({ ease: easeOutCubic, delay: 1500, duration: 2250, start: 50, end: 100, onUpdate: v => {
+      })});
+      animateValue({ ease: easeOutCubic, delay: 1500, duration: 2250, start: 50, end: 100, onUpdate: guard(v => {
         setCursorAngle((angleEnd - angleStart) * (v / 100) + angleStart);
-      }});
+      })});
       animateValue({ ease: easeInCubic, delay: 2500, duration: 1500, start: 100, end: 0,
-        onUpdate: v => setEdgeProximity(v / 100),
-        onEnd: () => setSweepActive(false),
+        onUpdate: guard(v => setEdgeProximity(v / 100)),
+        onEnd: () => { if (!cancelled) setSweepActive(false); },
       });
     };
 
@@ -167,7 +170,7 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
       }
     }, { threshold: 0.35 });
     io.observe(el);
-    return () => io.disconnect();
+    return () => { cancelled = true; io.disconnect(); };
   }, [animated]);
 
   const colorSensitivity = edgeSensitivity + 20;
@@ -183,6 +186,18 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
   const borderBg = meshGradients.map(g => `${g} border-box`);
   const fillBg = meshGradients.map(g => `${g} padding-box`);
   const angleDeg = `${cursorAngle.toFixed(3)}deg`;
+
+  const borderMask = `conic-gradient(from ${angleDeg} at center, black ${coneSpread}%, transparent ${coneSpread + 15}%, transparent ${100 - coneSpread - 15}%, black ${100 - coneSpread}%)`;
+  const fillMask = [
+    'linear-gradient(to bottom, black, black)',
+    'radial-gradient(ellipse at 50% 50%, black 40%, transparent 65%)',
+    'radial-gradient(ellipse at 66% 66%, black 5%, transparent 40%)',
+    'radial-gradient(ellipse at 33% 33%, black 5%, transparent 40%)',
+    'radial-gradient(ellipse at 66% 33%, black 5%, transparent 40%)',
+    'radial-gradient(ellipse at 33% 66%, black 5%, transparent 40%)',
+    `conic-gradient(from ${angleDeg} at center, transparent 5%, black 15%, black 85%, transparent 95%)`,
+  ].join(', ');
+  const glowMask = `conic-gradient(from ${angleDeg} at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%)`;
 
   return (
     <div
@@ -209,8 +224,8 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
             ...borderBg,
           ].join(', '),
           opacity: borderOpacity,
-          maskImage: `conic-gradient(from ${angleDeg} at center, black ${coneSpread}%, transparent ${coneSpread + 15}%, transparent ${100 - coneSpread - 15}%, black ${100 - coneSpread}%)`,
-          WebkitMaskImage: `conic-gradient(from ${angleDeg} at center, black ${coneSpread}%, transparent ${coneSpread + 15}%, transparent ${100 - coneSpread - 15}%, black ${100 - coneSpread}%)`,
+          maskImage: borderMask,
+          WebkitMaskImage: borderMask,
           transition: isVisible ? 'opacity 0.25s ease-out' : 'opacity 0.75s ease-in-out',
         }}
       />
@@ -221,24 +236,8 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
         style={{
           border: '1px solid transparent',
           background: fillBg.join(', '),
-          maskImage: [
-            'linear-gradient(to bottom, black, black)',
-            'radial-gradient(ellipse at 50% 50%, black 40%, transparent 65%)',
-            'radial-gradient(ellipse at 66% 66%, black 5%, transparent 40%)',
-            'radial-gradient(ellipse at 33% 33%, black 5%, transparent 40%)',
-            'radial-gradient(ellipse at 66% 33%, black 5%, transparent 40%)',
-            'radial-gradient(ellipse at 33% 66%, black 5%, transparent 40%)',
-            `conic-gradient(from ${angleDeg} at center, transparent 5%, black 15%, black 85%, transparent 95%)`,
-          ].join(', '),
-          WebkitMaskImage: [
-            'linear-gradient(to bottom, black, black)',
-            'radial-gradient(ellipse at 50% 50%, black 40%, transparent 65%)',
-            'radial-gradient(ellipse at 66% 66%, black 5%, transparent 40%)',
-            'radial-gradient(ellipse at 33% 33%, black 5%, transparent 40%)',
-            'radial-gradient(ellipse at 66% 33%, black 5%, transparent 40%)',
-            'radial-gradient(ellipse at 33% 66%, black 5%, transparent 40%)',
-            `conic-gradient(from ${angleDeg} at center, transparent 5%, black 15%, black 85%, transparent 95%)`,
-          ].join(', '),
+          maskImage: fillMask,
+          WebkitMaskImage: fillMask,
           maskComposite: 'subtract, add, add, add, add, add',
           WebkitMaskComposite: 'source-out, source-over, source-over, source-over, source-over, source-over',
           opacity: borderOpacity * fillOpacity,
@@ -252,8 +251,8 @@ const BorderGlow: React.FC<BorderGlowProps> = ({
         className="absolute pointer-events-none z-[1] rounded-[inherit]"
         style={{
           inset: `${-glowRadius}px`,
-          maskImage: `conic-gradient(from ${angleDeg} at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%)`,
-          WebkitMaskImage: `conic-gradient(from ${angleDeg} at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%)`,
+          maskImage: glowMask,
+          WebkitMaskImage: glowMask,
           opacity: glowOpacity,
           mixBlendMode: 'plus-lighter',
           transition: isVisible ? 'opacity 0.25s ease-out' : 'opacity 0.75s ease-in-out',
