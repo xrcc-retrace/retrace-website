@@ -9,7 +9,7 @@ const EMAILS = ["jacogoby@gmail.com", "ykarthurlee@gmail.com"];
 export function FinalCTA() {
   return (
     <section id="final-cta" className="border-t-0">
-      <div className="shell py-16 lg:py-20">
+      <div className="shell pt-0 pb-16 lg:pb-20">
         <PixelCard
           colors="#FFC21C,#e6a800,#b37d00"
           gap={8}

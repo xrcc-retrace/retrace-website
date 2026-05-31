@@ -1,19 +1,6 @@
 import { MonoLabel } from "./primitives";
 import { SplineRobot } from "./SplineRobot";
 
-// Inline-cited datum — same pattern as Problem.tsx, kept local to avoid
-// importing across components.
-function Datum({ value, source }: { value: string; source: string }) {
-  return (
-    <span className="whitespace-nowrap">
-      <span className="font-semibold text-ink">{value}</span>
-      <span className="ml-1.5 font-mono text-[10px] uppercase tracking-[0.1em] text-muted/70">
-        {source}
-      </span>
-    </span>
-  );
-}
-
 const labs = [
   {
     name: "Figure",
@@ -52,15 +39,14 @@ export function HumanoidArc() {
   return (
     <section
       id="humanoid-arc"
-      className="relative border-t border-stroke bg-surface/15"
+      className="relative border-t border-stroke bg-[#0A0B0D]"
     >
       {/* Opener */}
       <div className="shell py-24 lg:py-32">
         <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
           {/* Left — copy */}
           <div>
-            <MonoLabel className="text-muted/70">The longer arc</MonoLabel>
-            <h2 className="mt-4 text-balance text-3xl font-semibold leading-[1.06] tracking-[-0.025em] text-ink sm:text-4xl lg:text-[56px]">
+            <h2 className="text-balance text-3xl font-light leading-[1.1] tracking-[-0.025em] text-ink sm:text-4xl lg:text-[56px]">
               AI copilot for technicians today.
               <br />
               <span className="text-accent">
@@ -68,29 +54,21 @@ export function HumanoidArc() {
               </span>
             </h2>
             <p className="mt-9 text-pretty text-[17px] leading-[1.7] text-muted lg:text-[18px]">
-              Robotics labs aren't compute-starved. They're data-starved. The
-              humanoid wave needs first-person video of humans doing useful
-              work, paired with speech and task-completion ground truth. That's
-              scarce. Most of what exists is consumer or household.
+              Frontier robotics labs do not have a funding problem; they have a
+              data problem. To train humanoid robots to do actual industrial
+              work, they need first-person video of real tradespeople explaining
+              what they are doing. Today, that data is incredibly scarce because
+              most internet video only shows simple household chores.
             </p>
             <p className="mt-5 text-pretty text-[17px] leading-[1.7] text-muted lg:text-[18px]">
-              The public benchmarks tell the story.{" "}
-              <Datum value="3,670 hrs" source="Ego4D · Meta '22" /> of egocentric
-              video across 9 countries.{" "}
-              <Datum value="1,422 hrs" source="Ego-Exo4D · Meta '23" /> of paired
-              first-person + third-person footage.{" "}
-              <Datum value="76K demos" source="DROID · Stanford '24" /> of robot
-              manipulation across 86 tasks.{" "}
-              <Datum value="1M+ episodes" source="Open X-Embodiment · DeepMind '23" />{" "}
-              spanning 22 different embodiments. All landmark releases. None
-              indexed by industrial procedure, none paired with expert
-              narration, none capturing the long tail of skilled-trade tasks
-              that pay the labs' bills.
+              By helping human technicians complete their work today, Retrace
+              naturally captures the specialized, step-by-step data that the
+              world's most advanced robotics programs are waiting for.
             </p>
           </div>
 
           {/* Right — cursor-following 3D robot */}
-          <div className="relative h-[380px] overflow-hidden rounded-lg bg-canvas sm:h-[440px] lg:h-[520px]">
+          <div className="relative h-[380px] overflow-hidden rounded-lg bg-[#0A0B0D] sm:h-[440px] lg:h-[520px]">
             <div
               aria-hidden
               className="pointer-events-none absolute inset-0"
@@ -98,13 +76,11 @@ export function HumanoidArc() {
             <SplineRobot className="absolute inset-0 h-full w-full" />
           </div>
         </div>
-      </div>
 
-      {/* Labs strip */}
-      <div className="border-t border-stroke">
-        <div className="shell py-16 lg:py-20">
+        {/* Labs strip — full-width under the opener, matching content width */}
+        <div className="mt-16 lg:mt-20">
           <MonoLabel className="text-muted/70">
-            The data-starved labs · cumulative funding
+            The data-starved labs
           </MonoLabel>
           <div className="mt-7 grid gap-px overflow-hidden border border-stroke bg-stroke sm:grid-cols-2 lg:grid-cols-5">
             {labs.map((l) => (
@@ -128,10 +104,9 @@ export function HumanoidArc() {
             ))}
           </div>
           <p className="mt-7 max-w-2xl text-[13.5px] leading-relaxed text-muted">
-            Combined Series-B+ funding across the five frontier humanoid
-            programs: <span className="text-ink">over $1.4B</span> raised in 18
-            months on the promise of robots that can do useful physical work.
-            The bottleneck is the same in every deck.
+            <span className="text-ink font-semibold">Over $1.4B</span> raised in 18
+            months across 5 frontier humanoid programmes. All on the promise of robots that can do useful physical work.
+            <span className="text-ink font-semibold">The bottleneck is the same: they are starved for useful data.</span> 
           </p>
         </div>
       </div>
