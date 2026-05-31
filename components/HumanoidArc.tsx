@@ -135,18 +135,6 @@ export function HumanoidArc() {
           </p>
         </div>
       </div>
-
-      {/* Closing line */}
-      <div className="border-t border-stroke">
-        <div className="shell py-20 lg:py-28">
-          <p className="max-w-3xl text-balance text-2xl font-medium leading-[1.18] tracking-[-0.015em] text-ink lg:text-[34px]">
-            Same data, two markets.{" "}
-            <span className="text-muted">
-              AI copilot today. Training corpus tomorrow.
-            </span>
-          </p>
-        </div>
-      </div>
     </section>
   );
 }
