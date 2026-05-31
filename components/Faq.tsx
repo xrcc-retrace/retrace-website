@@ -29,7 +29,7 @@ const items = [
 
 export function Faq() {
   return (
-    <Section id="faq" eyebrow="Frequently Asked Questions (FAQ)">
+    <Section id="faq" eyebrow="Frequently Asked Questions (FAQ)" bordered={false}>
       <SectionHeading title="Six questions, six straight answers." />
       <div className="overflow-hidden border border-stroke">
         {items.map((it, i) => (
