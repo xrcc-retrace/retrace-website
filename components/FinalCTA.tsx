@@ -23,7 +23,7 @@ export function FinalCTA() {
               <span>Training humanoids tomorrow.</span>
             </blockquote>
 
-            <p className="mt-2 md:mt-6 text-[15px] leading-[1.6]">
+            <p className="mt-2 font-medium md:mt-6 text-[15px] leading-[1.6]">
               Try Retrace on TestFlight. Or talk to us about industrial pilots.
             </p>
 
