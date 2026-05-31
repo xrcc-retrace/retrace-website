@@ -3,10 +3,11 @@ import { Hero } from "@/components/Hero";
 import { Problem } from "@/components/Problem";
 import { ProductTour } from "@/components/ProductTour";
 import { BuiltFor } from "@/components/BuiltFor";
-import { WhyNow } from "@/components/WhyNow";
+import { UniqueData } from "@/components/UniqueData";
 import { HumanoidArc } from "@/components/HumanoidArc";
 import { Team } from "@/components/Team";
 import { Faq } from "@/components/Faq";
+import { FinalCTA } from "@/components/FinalCTA";
 import { Footer } from "@/components/Footer";
 
 export default function Home() {
@@ -18,10 +19,11 @@ export default function Home() {
         <Problem />
         <ProductTour />
         <BuiltFor />
-        <WhyNow />
+        <UniqueData />
         <HumanoidArc />
         <Team />
         <Faq />
+        <FinalCTA />
       </main>
       <Footer />
     </>
