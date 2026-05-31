@@ -1,4 +1,4 @@
-import { Section, SectionHeading } from "./primitives";
+import { Section, MonoLabel } from "./primitives";
 
 const items = [
   {
@@ -29,8 +29,13 @@ const items = [
 
 export function Faq() {
   return (
-    <Section id="faq" eyebrow="Frequently Asked Questions (FAQ)" bordered={false}>
-      <SectionHeading title="Six questions, six straight answers." />
+    <Section id="faq" bordered={false}>
+      <div className="mb-6 text-center">
+        <MonoLabel className="text-ink/80">Frequently Asked Questions (FAQ)</MonoLabel>
+      </div>
+      <h2 className="mb-12 text-balance text-center text-3xl font-light leading-[1.1] tracking-[-0.025em] text-ink sm:text-4xl lg:mb-16 lg:text-[56px]">
+        Six questions, six straight answers.
+      </h2>
       <div className="overflow-hidden border border-stroke">
         {items.map((it, i) => (
           <details

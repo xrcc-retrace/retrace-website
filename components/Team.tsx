@@ -21,7 +21,7 @@ export function Team() {
     >
       <div className="shell py-24 lg:py-40">
         <MonoLabel className="text-muted/70">Two builders</MonoLabel>
-        <h2 className="mt-4 text-balance text-3xl font-semibold leading-[1.1] tracking-[-0.025em] text-ink sm:text-4xl lg:text-[44px]">
+        <h2 className="mt-4 text-balance text-3xl font-light leading-[1.1] tracking-[-0.025em] text-ink sm:text-4xl lg:text-[56px]">
           Full-stack, end-to-end.
         </h2>
         <p className="mt-5 max-w-md text-pretty text-[16.5px] leading-[1.65] text-muted">
