@@ -20,7 +20,7 @@ export function Problem() {
           {/* Editorial column — prose with stats woven in */}
           <div className="max-w-[60ch]">
             <MonoLabel className="text-muted/70">The problem</MonoLabel>
-            <h2 className="mt-4 text-balance text-3xl font-semibold leading-[1.12] tracking-[-0.025em] text-ink sm:text-4xl lg:text-[44px]">
+            <h2 className="mt-4 text-balance text-3xl font-light leading-[1.1] tracking-[-0.025em] text-ink sm:text-4xl lg:text-[56px]">
               Your senior technician walks out the door. Decades of judgment
               walk out with him.
             </h2>

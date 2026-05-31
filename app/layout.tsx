@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import { Inter, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { Agentation } from "agentation";
 import { CustomCursor } from "@/components/CustomCursor";
 import "./globals.css";
 
-const inter = Inter({
+const geist = Geist({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-inter",
+  variable: "--font-geist",
   display: "swap",
+  fallback: ["system-ui", "arial", "sans-serif"],
 });
 
 const geistMono = Geist_Mono({
@@ -49,7 +50,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${geistMono.variable} antialiased`}
+      className={`${geist.variable} ${geistMono.variable} antialiased`}
     >
       <body className="min-h-screen bg-canvas text-ink">
         {children}
