@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { MobileNav } from "./MobileNav";
 import { TESTFLIGHT_URL } from "@/lib/links";
 
-const links = [
-  { label: "How to Vote" },
+const links: { label: string; href?: string }[] = [
+  { label: "How to Vote", href: "/how-to-vote" },
   { label: "Blog" },
 ];
 
@@ -37,15 +38,25 @@ export function StickyNav() {
           <span className="flex items-center" aria-label="Retrace home">
             <img src="/LogoIcon.svg" className="h-5 w-5" alt="" aria-hidden />
           </span>
-          {links.map((l) => (
-            <span
-              key={l.label}
-              aria-disabled="true"
-              className="cursor-default select-none whitespace-nowrap text-[13px] font-medium text-muted sm:text-[15px]"
-            >
-              {l.label}
-            </span>
-          ))}
+          {links.map((l) =>
+            l.href ? (
+              <Link
+                key={l.label}
+                href={l.href}
+                className="select-none whitespace-nowrap text-[13px] font-medium text-muted transition-colors hover:text-ink sm:text-[15px]"
+              >
+                {l.label}
+              </Link>
+            ) : (
+              <span
+                key={l.label}
+                aria-disabled="true"
+                className="cursor-default select-none whitespace-nowrap text-[13px] font-medium text-muted sm:text-[15px]"
+              >
+                {l.label}
+              </span>
+            ),
+          )}
         </nav>
 
         {/* Right pill — Install on TestFlight, fades in after the hero */}

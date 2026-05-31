@@ -1,10 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Plus, Download, Play } from "lucide-react";
 import { TESTFLIGHT_URL, TRAILER_URL } from "@/lib/links";
 
-const navLinks = ["Home", "How to Vote", "Blog"];
+const navLinks: { label: string; href?: string }[] = [
+  { label: "Home", href: "/" },
+  { label: "How to Vote", href: "/how-to-vote" },
+  { label: "Blog" },
+];
 
 const GLASS = "border border-white/10 bg-white/[0.06] backdrop-blur-md";
 
@@ -70,17 +75,26 @@ export function MobileNav({ className = "" }: { className?: string }) {
             open ? "opacity-100 delay-150" : "pointer-events-none opacity-0"
           }`}
         >
-          {navLinks.map((label, i) => (
-            <span
-              key={label}
-              aria-disabled="true"
-              className={`select-none text-[44px] tracking-[-0.35px] leading-[1.1] ${
-                i === 0 ? "font-normal text-ink" : "font-light text-white/70"
-              }`}
-            >
-              {label}
-            </span>
-          ))}
+          {navLinks.map((l, i) => {
+            const cls = `select-none text-[44px] tracking-[-0.35px] leading-[1.1] ${
+              i === 0 ? "font-normal text-ink" : "font-light text-white/70"
+            }`;
+            return l.href ? (
+              <Link
+                key={l.label}
+                href={l.href}
+                tabIndex={open ? undefined : -1}
+                onClick={() => setOpen(false)}
+                className={cls}
+              >
+                {l.label}
+              </Link>
+            ) : (
+              <span key={l.label} aria-disabled="true" className={cls}>
+                {l.label}
+              </span>
+            );
+          })}
         </nav>
 
         {/* CTAs */}
