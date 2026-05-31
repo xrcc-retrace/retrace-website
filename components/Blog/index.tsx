@@ -1,4 +1,5 @@
 import { TRAILER_EMBED_URL } from "@/lib/links";
+import { BLOG_POSTS } from "@/lib/posts";
 import { BlogFeed } from "./BlogFeed";
 
 export function Blog() {
@@ -26,15 +27,35 @@ export function Blog() {
         </div>
       </div>
 
-      {/* Post feed */}
-      <div className="border-t border-stroke pb-24 pt-4 lg:pb-32">
-        <div className="shell pb-2 pt-6">
-          <h2 className="text-xl font-medium tracking-[-0.01em] text-ink">
-            Latest posts
-          </h2>
+      {/* Post feed — or a teaser empty state until the first post lands */}
+      {BLOG_POSTS.length > 0 ? (
+        <div className="border-t border-stroke pb-24 pt-4 lg:pb-32">
+          <div className="shell pb-2 pt-6">
+            <h2 className="text-xl font-medium tracking-[-0.01em] text-ink">
+              Latest posts
+            </h2>
+          </div>
+          <BlogFeed />
         </div>
-        <BlogFeed />
-      </div>
+      ) : (
+        <div className="border-t border-stroke">
+          <div className="shell flex flex-col items-center py-24 text-center lg:py-32">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/LogoIcon.svg"
+              alt=""
+              aria-hidden
+              className="h-12 w-auto opacity-20"
+            />
+            <h2 className="mt-7 text-balance text-xl font-medium tracking-[-0.01em] text-ink sm:text-2xl">
+              More to come soon
+            </h2>
+            <p className="mt-3 max-w-sm text-pretty text-[15px] leading-relaxed text-muted">
+              Field notes from our journey building Retrace are on the way. Watch this space.
+            </p>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
