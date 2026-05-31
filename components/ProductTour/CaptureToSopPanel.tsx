@@ -4,9 +4,9 @@ import { DEMO_PROCEDURE } from "@/lib/procedure";
 // Visual-only pane for the Capture step — recording + extracted SOP.
 export function CaptureVisual() {
   return (
-    <div className="grid grid-cols-[1.05fr_1fr] gap-3 rounded-[14px] border border-stroke bg-surface/40 p-3">
+    <div className="grid grid-cols-1 gap-3 rounded-[14px] border border-stroke bg-surface/40 p-3 lg:grid-cols-[1.05fr_1fr]">
       <div className="relative overflow-hidden rounded-[8px] border border-stroke bg-canvas">
-        <div className="aspect-[10/13] w-full">
+        <div className="aspect-video w-full lg:aspect-[10/13]">
           <video
             muted
             playsInline

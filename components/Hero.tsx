@@ -37,12 +37,12 @@ export function Hero() {
           </span>
 
           {/* Headline */}
-          <h1 className="mt-6 max-w-[14ch] text-balance text-[44px] font-normal leading-[0.98] tracking-[-0.035em] text-ink sm:text-[72px] lg:text-[112px]">
+          <h1 className="mt-2 md:mt-6 max-w-[14ch] text-balance text-[44px] font-normal leading-[0.98] tracking-[-0.035em] text-ink sm:text-[72px] lg:text-[112px]">
             AI copilot for field technicians
           </h1>
 
           {/* Subtitle */}
-          <p className="mt-8 max-w-[40rem] text-pretty text-xl font-light text-ink lg:text-[32px]">
+          <p className="mt-4 md:mt-8 max-w-[40rem] text-pretty text-xl font-light text-ink lg:text-[32px]">
             Record one expert demo. Infinite real-time coaching via smart glasses
             or mobile.
           </p>
