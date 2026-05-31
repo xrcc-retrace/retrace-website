@@ -8,7 +8,7 @@ import { TESTFLIGHT_URL, TRAILER_URL } from "@/lib/links";
 const navLinks: { label: string; href?: string }[] = [
   { label: "Home", href: "/" },
   { label: "How to Vote", href: "/how-to-vote" },
-  { label: "Blog" },
+  { label: "Blog", href: "/blog" },
 ];
 
 const GLASS = "border border-white/10 bg-white/[0.06] backdrop-blur-md";

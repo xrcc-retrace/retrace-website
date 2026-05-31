@@ -7,7 +7,7 @@ import { TESTFLIGHT_URL } from "@/lib/links";
 
 const links: { label: string; href?: string }[] = [
   { label: "How to Vote", href: "/how-to-vote" },
-  { label: "Blog" },
+  { label: "Blog", href: "/blog" },
 ];
 
 export function StickyNav() {
