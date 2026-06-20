@@ -78,7 +78,7 @@ function TourDesktop({ reducedMotion }: { reducedMotion: boolean }) {
   };
 
   return (
-    <div className="shell grid items-start gap-12 pb-24 lg:grid-cols-[5fr_7fr] lg:gap-16 lg:pb-32">
+    <div className="shell grid items-start gap-12 pb-24 lg:grid-cols-[4fr_8fr] lg:gap-16 lg:pb-32">
       {/* Left rail — pinned, holds while the right column scrolls past */}
       <div className="flex flex-col gap-10 lg:sticky lg:top-32 lg:self-start">
         {TOUR_STEPS.map((step, i) => {

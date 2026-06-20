@@ -1,31 +1,29 @@
 import { MonoLabel } from "../primitives";
 
 const transcript = [
-  { from: "ai", text: "Loosen the housing bolts in diagonal pairs, two passes." },
-  { from: "tech", text: "Like this?" },
-  { from: "ai", text: "Yes. Once they're each backed out one full turn, you're good to advance." },
-  { from: "tool", text: "advance_step({ from: 2, to: 3, method: 'visual' })" },
+  { from: "ai", text: "Rivet nut tool. Sets threaded inserts into sheet metal with no rear access. Three parts: body, mandrel, nose piece." },
+  { from: "tech", text: "Do I pick the mandrel first?" },
+  { from: "ai", text: "Yes. Match it to your rivet nut spec, then torque the nose piece to 15 Nm before attaching." },
+  { from: "tool", text: "advance_step({ from: 1, to: 2, method: 'visual' })" },
 ];
 
 // Visual-only pane for the Coach step — learner POV + live activity feed.
 export function CoachVisual() {
   return (
-    <div className="grid grid-cols-1 gap-3 rounded-[14px] border border-stroke bg-canvas/60 p-3 lg:grid-cols-[1.4fr_1fr]">
+    <div className="grid grid-cols-1 gap-3 rounded-[14px] border border-stroke bg-canvas/60 p-3 lg:grid-cols-[1fr_auto]">
       {/* Learner POV */}
-      <div className="relative overflow-hidden rounded-[8px] border border-stroke bg-canvas">
-        <div className="aspect-[10/11] w-full">
+      <div className="relative rounded-[8px] border border-stroke bg-canvas">
+        <div className="aspect-video w-full lg:aspect-auto lg:h-full">
           <video
             muted
             playsInline
             loop
             autoPlay
-            poster="/video/expert-demo-poster.jpg"
             preload="metadata"
             className="h-full w-full object-cover opacity-95"
             aria-hidden
           >
-            <source src="/video/expert-demo.webm" type="video/webm" />
-            <source src="/video/expert-demo.mp4" type="video/mp4" />
+            <source src="/video/Learner43ratio.webm" type="video/webm" />
           </video>
         </div>
         {/* HUD overlays */}
@@ -48,7 +46,7 @@ export function CoachVisual() {
         </div>
       </div>
       {/* Activity feed */}
-      <div className="flex flex-col gap-2.5 rounded-[8px] border border-stroke bg-canvas p-5">
+      <div className="flex flex-col gap-2.5 rounded-[8px] border border-stroke bg-canvas p-5 lg:w-64">
         <MonoLabel>Activity</MonoLabel>
         {transcript.map((b, i) => (
           <div

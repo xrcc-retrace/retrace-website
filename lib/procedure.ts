@@ -20,62 +20,63 @@ export type DemoProcedure = {
 };
 
 export const DEMO_PROCEDURE: DemoProcedure = {
-  id: "demo-manifold-swap",
-  title: "Replace hydraulic manifold seal",
-  product: "Industrial fluid system",
+  id: "demo-rivet-install",
+  title: "Install structural blind rivet nut insert",
+  product: "Pneumatic rivet nut tool",
   steps: [
     {
       index: 1,
-      title: "Isolate line pressure",
+      title: "Select mandrel and nose piece",
       description:
-        "Close upstream and downstream valves. Verify gauge reads zero before opening housing.",
+        "Match mandrel diameter to rivet nut spec. Torque nose piece to 15 Nm before attaching to tool.",
       start: "00:00",
       end: "00:01",
-      completion_criteria: "Both valves visibly closed. Gauge at 0 psi.",
+      completion_criteria: "Nose piece seated flush, no lateral play.",
     },
     {
       index: 2,
-      title: "Loosen housing bolts",
+      title: "Set tool stroke depth",
       description:
-        "Counter-rotate diagonal pairs in two passes. Do not fully remove on the first pass.",
+        "Dial stroke to rivet nut grip range per fastener datasheet. Verify with a pull test on scrap material.",
       start: "00:01",
       end: "00:02",
-      completion_criteria: "Four bolts backed out one full turn each.",
+      completion_criteria: "Stroke confirmed within ±0.2 mm of nominal.",
     },
     {
       index: 3,
-      title: "Lift the manifold cover",
-      description: "Pry corners evenly to break the seal. Set the cover aside on shop towel.",
+      title: "Drill and deburr pilot hole",
+      description:
+        "Drill to H7 tolerance. Deburr both faces — any burr will prevent the flange from seating flush.",
       start: "00:02",
       end: "00:03",
-      completion_criteria: "Cover is removed and resting clean-side down.",
+      completion_criteria: "Hole clean, no burr on either face.",
     },
     {
       index: 4,
-      title: "Inspect the old seal",
+      title: "Thread rivet nut onto mandrel",
       description:
-        "Note score marks, deformation, or contamination. Flag for the maintenance log.",
+        "Hand-thread until the flange contacts the nose piece. Do not cross-thread — apply axial pressure while threading.",
       start: "00:03",
       end: "00:04",
-      completion_criteria: "Old seal removed and inspection visible.",
+      completion_criteria: "Rivet nut seated against nose piece, no wobble.",
     },
     {
       index: 5,
-      title: "Seat the new seal",
+      title: "Fire tool and set fastener",
       description:
-        "Lubricate with system fluid. Press evenly until fully seated in the channel.",
+        "Insert into pilot hole and hold perpendicular to the panel. Squeeze trigger fully — single stroke only.",
       start: "00:04",
       end: "00:06",
-      completion_criteria: "New seal fully seated, no twist or bulge visible.",
+      completion_criteria: "Audible click on stroke completion. Flange flush to panel surface.",
     },
     {
       index: 6,
-      title: "Reassemble and pressure-test",
+      title: "Verify pull-out torque",
       description:
-        "Torque the housing bolts to spec in a star pattern. Re-open valves slowly and watch for weep.",
+        "Apply torque wrench to installed thread at spec value. Inspect backside for uniform collar deformation.",
       start: "00:06",
       end: "00:07",
-      completion_criteria: "Gauge holds nominal pressure for 60 seconds. No visible weep.",
+      completion_criteria: "Fastener holds rated pull-out torque. No spin-out or panel distortion.",
     },
   ],
 };
