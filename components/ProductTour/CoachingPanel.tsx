@@ -26,24 +26,6 @@ export function CoachVisual() {
             <source src="/video/Learner43ratio.webm" type="video/webm" />
           </video>
         </div>
-        {/* HUD overlays */}
-        <div className="absolute inset-3 flex flex-col justify-between">
-          <div className="flex items-start justify-between">
-            <div className="inline-flex items-center gap-1.5 rounded-[4px] bg-canvas/70 px-2 py-1 backdrop-blur">
-              <span
-                className="inline-block h-1.5 w-1.5 rounded-full bg-accent"
-                aria-hidden
-              />
-              <MonoLabel className="text-ink">LIVE · STEP 02 / 06</MonoLabel>
-            </div>
-            <div className="rounded-[4px] bg-canvas/70 px-2 py-1 backdrop-blur">
-              <MonoLabel className="text-ink">~0.5 FPS · LOW</MonoLabel>
-            </div>
-          </div>
-          <div className="self-end rounded-[4px] border border-accent/40 bg-canvas/80 px-2.5 py-1.5 backdrop-blur">
-            <MonoLabel className="text-accent">PiP · reference clip</MonoLabel>
-          </div>
-        </div>
       </div>
       {/* Activity feed */}
       <div className="flex flex-col gap-2.5 rounded-[8px] border border-stroke bg-canvas p-5 lg:w-64">
