@@ -1,8 +1,8 @@
-# Retrace — investor landing site
+# Retrace — technical overview site
 
-Public single-page marketing site for [Retrace](https://retracelab.com) — an AI coaching system for industrial field technicians.
+Public single-page technical overview for [Retrace](https://retracelab.com) — record an expert once through smart glasses or a phone, then coach every learner by voice while a second model verifies each step from the camera. Written for technical recruiters and engineering hiring managers; secondary audience is pilot partners.
 
-Built for the XRCC Berlin 2026 hackathon. **Production:** https://retracelab.com.
+Built at XRCC Berlin 2026 and carried on afterwards. **Production:** https://retracelab.com.
 
 For project context (stack, design tokens, anti-deck design principles, positioning rules) see [`CLAUDE.md`](./CLAUDE.md).
 
@@ -88,4 +88,4 @@ Feature branches you'd already pushed are untouched. The auto-sync only rewrites
 
 ## Stack
 
-Next.js 16 (App Router, Turbopack) · React 19 · Tailwind v4 · Framer Motion 12 · Inter + Geist Mono. See [`CLAUDE.md`](./CLAUDE.md) for the full layout and design-system reference.
+Next.js 16 (App Router, Turbopack) · React 19 · Tailwind v4 · Framer Motion 12 (cursor only) · Geist + Geist Mono. See [`CLAUDE.md`](./CLAUDE.md) for the full layout and design-system reference.

@@ -1,8 +1,10 @@
 @AGENTS.md
 
-# Retrace — investor landing site
+# Retrace — technical overview site
 
-Public single-page marketing site for [Retrace](https://github.com/) — an AI coaching system for industrial field technicians. Built for the XRCC Berlin 2026 hackathon. **Audience:** investors and industrial OEM pilot partners.
+Public single-page site for [Retrace](https://retracelab.com) — an AI coaching system: record an expert once through smart glasses or a phone, then coach every learner by voice while a second model verifies each step from the camera. Built at XRCC Berlin 2026 and carried on afterwards.
+
+**Audience:** technical recruiters and engineering hiring managers evaluating the team (2–3 minute skim). Secondary: B2B pilot partners (HVAC / electrical contractors) who want proof it is real.
 
 One-liner: *"Record an expert once. Coach every learner forever."*
 
@@ -21,42 +23,70 @@ Requires Node ≥ 20. No env vars required for local dev.
 - **Next.js 16.2** (App Router, Turbopack) — *not the Next.js in your training data; check `node_modules/next/dist/docs/` first*
 - **React 19**
 - **Tailwind v4** (CSS-vars driven; tokens in `app/globals.css`)
-- **Framer Motion 12** (only the Hero and BuiltFor tabs use it; everything else is pure CSS)
-- **`next/font/google`** — Inter (display + body) · Geist Mono (labels, mono accents)
+- **Framer Motion 12** — only `CustomCursor.tsx` uses it. Everything else is CSS.
+- **`next/font/google`** — Geist (display + body) · Geist Mono (identifiers, labels, payloads). The CSS variable for mono is still named `--font-mono-jb` for historical reasons.
 - **`@vercel/og`** — generates `/opengraph-image` at build time
-- **Deploy target:** Vercel (not yet wired)
+- **Deploy target:** Vercel (`main` → retracelab.com; see README for the branch flow)
+
+`package.json` still lists `three`, `@react-three/*`, `postprocessing` and `@splinetool/*` from the earlier site. Nothing imports them any more; drop them (and re-lock) in a separate change.
 
 ## Layout
 
 ```
 retrace-website/
 ├── app/
-│   ├── layout.tsx            # fonts + metadata + OG card
-│   ├── page.tsx              # composes 8 sections in order
-│   ├── globals.css           # design tokens + Tailwind base
-│   └── opengraph-image.tsx   # 1200×630 PNG via Satori
+│   ├── layout.tsx              # fonts + metadata (metadataBase retracelab.com) + OG card
+│   ├── page.tsx                # composes the sections below, in this order
+│   ├── globals.css             # design tokens, smooth anchors, .ident, .diagram, hero log keyframe
+│   └── opengraph-image.tsx     # 1200×630 PNG via Satori
 ├── components/
-│   ├── primitives/           # MonoLabel, ChipTag, Cta, Section, DiamondMark
-│   ├── Hero.tsx              # client component — cursor-reactive HUD
-│   ├── Problem.tsx           # editorial spread (no card grid)
-│   ├── ProductTour/          # three cinematic panels (Capture · Coach · Troubleshoot)
-│   ├── BuiltFor/             # client component — tabbed persona switcher
-│   ├── WhyNow.tsx            # compact 2026-unlocks prose
-│   ├── HumanoidArc.tsx       # deep platform-play section
-│   ├── Team.tsx              # team cards + close + CTA
-│   ├── Faq.tsx               # native <details> accordion
-│   ├── StickyNav.tsx         # fixed top nav
-│   └── Footer.tsx
+│   ├── primitives/             # MonoLabel, Id (inline identifier), ChipTag, DiamondMark,
+│   │                           # SectionHeader, CodeBlock (annotated payload), Cta
+│   ├── StickyNav.tsx           # fixed pill nav; exports NAV_LINKS (anchors)
+│   ├── MobileNav.tsx           # < md glass menu; same anchors
+│   ├── Hero.tsx                # one-liner + mechanism sentence + learner demo video + wire log; ONE CTA (#architecture)
+│   ├── Flows.tsx               # three flows as a staggered spread (not a 3-card grid)
+│   ├── CapturePipeline.tsx     # upload → Pro extraction (JSON proof panels) → ffmpeg clips + done-frames → editable procedure; interviewer aside
+│   ├── Architecture/
+│   │   ├── index.tsx           # id="architecture": diagram, "Why not one model?", check_step + verdict payloads, session guarantees
+│   │   └── ParallelDiagram.tsx # inline SVG, two lanes (Live / oracle). Wide (≥ sm) and narrow (< sm) drawings
+│   ├── Troubleshoot.tsx        # five tool calls in order, with abbreviated args/results and phase transitions
+│   ├── Stack.tsx               # server / client stack + 7 numbered decisions, each with its trade-off
+│   ├── Numbers.tsx             # real figures only (poll cadence, fps, compression, floor, voices, modes)
+│   ├── Team.tsx                # two members, role, GitHub, LinkedIn (href="#" until PM supplies URLs)
+│   ├── Faq.tsx                 # native <details>, technical questions
+│   ├── AfterHackathon.tsx      # id="after": dated band with [PM: fill in] placeholders — never invent facts
+│   ├── Footer.tsx              # closing statement + Product / Code / Contact columns + quiet dated line
+│   ├── LazyVideo.tsx           # poster-first <video>; sources attach on intersection
+│   └── CustomCursor.tsx        # desktop-only reticle cursor (Framer springs → CSS vars)
 ├── lib/
-│   └── procedure.ts          # static demo SOP (industrial framing)
+│   └── links.ts                # TestFlight, trailer, emails, repo URLs, TEAM (GitHub + LinkedIn TODO)
 └── public/
-    ├── retrace-logo.svg
-    └── video/                # expert-demo.mp4 + .webm + .jpg poster (~600 KB each)
+    ├── LogoIcon.svg · retrace-logo.svg
+    └── video/
+        ├── Learner43ratio.webm (1.3 MB) + learner-poster.jpg   # hero
+        ├── Expert43ratio.webm  (2.5 MB) + expert43-poster.jpg  # capture section, lazy
+        ├── expert-demo.mp4 / .webm / -poster.jpg (~0.5 MB)      # mp4 fallback for the hero
+        └── Expert43ratio.mp4   (26 MB) — NEVER reference this from the page
 ```
 
-## Design tokens — locked from the pitch deck
+`next.config.ts` redirects the retired `/how-to-vote` and `/blog` routes to `/`.
 
-Single source of truth in `app/globals.css`. Match `main-local-server-test/pitch/generate_deck.py:30-52`.
+## Source of truth for copy
+
+Every technical claim on the page must map to code in `../main-local-server-test/` or `../retrace-ios/`, or to a fact the PM supplied. Identifiers (`check_step`, `/api/learner/session/{id}/verify`, `[ADVANCE]`, `completion_criteria`, `visual_verifiability`, `web_search_for_fix`, …) are rendered with the `Id` primitive (Geist Mono). Before changing a number or a mechanism sentence, re-read the file it comes from:
+
+- Oracle semantics, confidence floor (0.6), dwell table, insist-once, trust-on-failure → `routers/learner.py`, `services/step_oracle.py`
+- Live tool set (`check_step`, `get_reference_clip`, `go_to_step`; no `advance_step`) and model id → `services/prompt_builder.py`, `config.py`
+- Token constraints, compression 100k → 40k, resumption, `MEDIA_RESOLUTION_MEDIUM` → `services/ephemeral_token.py`
+- Troubleshoot tools, phases, two-step web research (Flash + `google_search`, then Pro structured output) → `services/troubleshoot/`
+- Poll cadence (4 s), ~1 fps, wire quirks (binary JSON frames, `setup` frame, `goAway`) → `retrace-ios/.../CoachingSessionViewModel.swift`, `GeminiLiveService.swift`
+
+Pilot facts in `AfterHackathon.tsx` come only from the PM. Placeholders carry a visible `[PM: fill in]` prefix and a `TODO(pm)` comment; leave them visible rather than guessing.
+
+## Design tokens
+
+Single source of truth in `app/globals.css`.
 
 | Token | Value | Use |
 |---|---|---|
@@ -67,74 +97,42 @@ Single source of truth in `app/globals.css`. Match `main-local-server-test/pitch
 | `--stroke-hi` | `#4A4F55` | brighter hairline |
 | `--ink` | `#F2F4F6` | primary text |
 | `--muted` | `#A8AEB6` | secondary text |
-| `--accent` | `#FFC21C` | warm HUD focus — one CTA per section, never background |
+| `--accent` | `#FFC21C` | the one CTA, and the oracle / verification path in diagrams and payloads |
 | `--destructive` | `#F54236` | "broken / failed" framings only |
 
-Type: **Inter** body/display (400/500/600/700, `-0.025em` tracking on display). **Geist Mono** for labels, timestamps, coord readouts (uppercase, `+0.14em`).
+Type: **Geist** body/display (400/500/600, `-0.025em` to `-0.035em` tracking on display). **Geist Mono** for identifiers, labels, timestamps, payloads.
 
-## The hero — cursor-reactive HUD reticle
-
-`components/Hero.tsx` is the only signature interactive moment on the site. Move the cursor across the product canvas:
-
-- Reticle (corner brackets + crosshair) follows in screen-space.
-- **Left zone** (over recording) → bounding box materializes on the video; chip reads `TRACKING · OBJECT 03`.
-- **Right zone** (over SOP) → hovered step lights up; chip reads `READ STEP · 03 / 06`.
-- **Center zone** → animated dashed hairline connects recording region to active SOP step; chip reads `ADVANCE_STEP · candidate`.
-- Composition has subtle ±2° parallax tilt that follows the cursor.
-
-**Implementation:** Framer Motion springs drive CSS custom properties (`--rx`, `--ry`) on the container — no React re-renders per frame. Gated on `@media (hover: hover) and (pointer: fine)` and `prefers-reduced-motion`.
+**Accent rule for diagrams:** the accent marks the verification lane and the join (`[ADVANCE]`). Lane A (Gemini Live) stays in `currentColor`. This is what makes the parallel structure readable at a glance; don't spend the accent elsewhere in that section.
 
 ## Design principles (the anti-deck rules)
 
-The v0 of this site translated the pitch deck slide-by-slide and read like one. v1 fixed it. Future changes must follow:
-
 1. **One bold idea per viewport.** A section that needs a 3-card grid is two sections.
-2. **Vary card layouts.** Never repeat the same card pattern twice in a row.
-3. **Drop eyebrows + numbered labels.** `01/02/03` chips + mono `THE PRODUCT` eyebrows = slide patterns. Allowed in ≤ 3 places site-wide.
-4. **Show, don't list.** Tabs > stacked cards. Cursor reticle > "we use vision AI" copy.
-5. **Variable rhythm.** Loud (hero, product) interleaved with quiet (problem, why-now). No two adjacent sections at the same density.
-6. **Asymmetric > symmetric.** When in doubt, off-center the content.
-7. **No customer logos we don't have.** Industry-baseline stats with named sources only — TestFlight is the substitute for social proof.
-8. **No vague vision-AI claims.** If we cite vision, we cite the mechanism (e.g., `advance_step` on per-step completion criterion, verified at 92% on the diagnostic probe).
+2. **Vary layouts.** Never repeat the same block pattern twice in a row (the page alternates: hero grid → staggered spread → rail with proof panels → diagram → log sequence → numbered list → numbers band → two-column lists).
+3. **Eyebrows and numbered markers only where the content is a sequence.** Capture stages, troubleshoot calls and the decisions list are sequences; nothing else gets numbers.
+4. **Show the mechanism, not the adjective.** Payloads, endpoints and file paths beat "AI-powered". No "agentic", "transformative", "next-generation".
+5. **Variable rhythm.** Loud (hero, architecture) interleaved with quiet (flows, numbers, FAQ).
+6. **Asymmetric over symmetric.** Off-centre the content when in doubt.
+7. **Real values only.** No invented metrics, no customer logos we don't have, no pilot facts the PM didn't supply.
+8. **Operator voice.** Plain verbs, sentence case. Second person where it helps.
 
-## Positioning rules (also enforced in `~/.claude/memory/retrace-pitch-positioning.md`)
+## Mobile and motion
 
-- **Headliner = AI copilot for field technicians.** Always. Humanoid / data-flywheel angle stays in `HumanoidArc.tsx`, never above it.
-- **First three viewports must not mention humanoid robots, robotics labs, or "data flywheel."** Enforced in `Hero` + `Problem` + `ProductTour`.
-- **Industrial framings only.** No consumer-product examples (the bundled Levoit fixture in the backend is *not* for marketing copy).
-- **Operator voice.** Second person ("your senior technician"), not first. No "agentic AI" / "next-generation" / "transformative."
+- 16 px minimum gutters (`--gutter`), no horizontal scroll at 375 px. Every flex/grid child holding code or prose has `min-w-0`; `<pre>` blocks scroll inside their own container.
+- The architecture diagram ships two SVGs (`ParallelDiagramWide` ≥ `sm`, `ParallelDiagramNarrow` below) so text stays ≥ 10 px at any width.
+- Animation: the hero log's one page-load reveal (`.log-line`), the mobile menu's height transition, and the cursor. `prefers-reduced-motion` collapses all of them (global rule in `globals.css`) and turns smooth anchor scrolling off.
+- Videos are poster-first. The hero loads `Learner43ratio.webm` with `preload="metadata"`; everything below the fold goes through `LazyVideo`.
 
-## Competitive context
+## Adding or changing a section
 
-Four rings, all relevant when writing copy:
-
-- **Direct, same wedge:** Carbyn (carbyn.space) · LineWise / Vision Lab (thevisionlab.ai)
-- **Service-intelligence SaaS:** Aquant.ai · Neuron7.ai
-- **OEM-bundled service advisor:** John Deere Service ADVISOR · Caterpillar SIS · Schneider Remote Expertise
-- **Connected-worker:** Augmentir · Tulip · Poka · L2L
-
-Full teardown in `~/.claude/memory/retrace-competitive-landscape.md`.
-
-## Asset prep
-
-- **Hero video** — encoded from `main-local-server-test/uploads/05843659-…mp4` via ffmpeg (H.264 + VP9, ≤ 600 KB each). Re-encode with the flags in `main-local-server-test/services/clip_extractor.py` if a different clip is needed.
-- **Demo SOP** — hardcoded in `lib/procedure.ts`. Industrial framing only (currently a hydraulic-manifold-seal-replace flow). Shape mirrors `models/procedure.py:ProcedureStep` so it stays plug-compatible if we later wire to a real API.
-- **OG image** — generated server-side via Satori in `app/opengraph-image.tsx`. Edit copy + colors there; no font file needed (uses system monospace fallback).
-
-## Adding new sections
-
-1. Create `components/NewSection.tsx`. Lead with one bold claim; resist the 3-card grid impulse.
-2. Import + place in `app/page.tsx` in the right scroll position (positioning rules above).
-3. Add anchor + label to `components/StickyNav.tsx` if it deserves nav placement.
-4. Verify: `npm run build` clean → `npm run dev` → mom-and-dad test.
-
-## Deploy
-
-Vercel target. Domain wiring not yet done — recommended order: `retrace.com` if available at consumer pricing, else `tryretrace.com` or `retrace.systems`. Avoid `.space` (Carbyn owns the TLD vibe).
+1. Create `components/NewSection.tsx`. Lead with the mechanism; resist the card grid.
+2. Place it in `app/page.tsx`.
+3. Add the anchor to `NAV_LINKS` in `components/StickyNav.tsx` if it deserves nav placement (the mobile menu reads the same list).
+4. Check the claim against the backend or iOS code before writing it.
+5. `npm run build` clean, then check 375 px and desktop.
 
 ## Related repos / docs
 
-- Backend + pitch deck source: `../main-local-server-test/` (FastAPI + Gemini orchestration)
-- iOS client: `../retrace-ios/` (SwiftUI + Meta DAT SDK + Gemini Live)
-- Pitch deck: `../pitch/Retrace_AWE2026.pptx`
-- Project root: `../CLAUDE.md` for full Retrace architecture
+- Backend: `../main-local-server-test/` (FastAPI + Gemini orchestration) → published as https://github.com/hshwang34/retrace-server
+- iOS client: `../retrace-ios/` (SwiftUI + Meta DAT SDK + Gemini Live) → https://github.com/hshwang34/retrace-ios
+- Project root: `../CLAUDE.md` for the full Retrace architecture (decisions 1–9)
+- Product brief for this site: `../docs/product/briefs/001-website-technical-overview-redesign.md`

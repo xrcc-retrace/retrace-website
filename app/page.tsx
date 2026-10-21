@@ -1,13 +1,14 @@
 import { StickyNav } from "@/components/StickyNav";
 import { Hero } from "@/components/Hero";
-import { Problem } from "@/components/Problem";
-import { ProductTour } from "@/components/ProductTour";
-import { BuiltFor } from "@/components/BuiltFor";
-import { UniqueData } from "@/components/UniqueData";
-import { HumanoidArc } from "@/components/HumanoidArc";
+import { Flows } from "@/components/Flows";
+import { CapturePipeline } from "@/components/CapturePipeline";
+import { Architecture } from "@/components/Architecture";
+import { Troubleshoot } from "@/components/Troubleshoot";
+import { Stack } from "@/components/Stack";
+import { Numbers } from "@/components/Numbers";
 import { Team } from "@/components/Team";
 import { Faq } from "@/components/Faq";
-import { FinalCTA } from "@/components/FinalCTA";
+import { AfterHackathon } from "@/components/AfterHackathon";
 import { Footer } from "@/components/Footer";
 
 export default function Home() {
@@ -16,14 +17,15 @@ export default function Home() {
       <StickyNav />
       <main>
         <Hero />
-        <Problem />
-        <ProductTour />
-        <BuiltFor />
-        <UniqueData />
-        <HumanoidArc />
+        <Flows />
+        <CapturePipeline />
+        <Architecture />
+        <Troubleshoot />
+        <Stack />
+        <Numbers />
         <Team />
         <Faq />
-        <FinalCTA />
+        <AfterHackathon />
       </main>
       <Footer />
     </>

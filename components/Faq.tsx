@@ -1,62 +1,135 @@
-import { Section, MonoLabel } from "./primitives";
+import { Id, SectionHeader } from "./primitives";
 
-const items = [
+const ITEMS: { q: string; a: React.ReactNode }[] = [
   {
-    q: "Do I need smart glasses?",
-    a: "No. Retrace runs on iPhone today. The phone holds the direct Gemini Live session, audio and camera. Ray-Ban Meta is an optional capture layer for hands-free work. Glasses and phone are interchangeable per session.",
+    q: "Where does the Gemini API key live?",
+    a: (
+      <>
+        Only on the server. Each session start mints an ephemeral token
+        through the <Id>v1alpha</Id> <Id>auth_tokens</Id> API with{" "}
+        <Id>uses=1</Id>, a one-hour expiry and a 120 s window to open the
+        socket. The model, system prompt, tools, voice, compression and
+        resumption settings are constraints baked into that token, so the
+        phone connects to Gemini Live directly but cannot change what the
+        session is allowed to do.
+      </>
+    ),
   },
   {
-    q: "What about the privacy of recorded video?",
-    a: "Expert recordings stay in your tenant. Voice and video stream peer-to-peer between the technician's phone and Gemini Live. The recording is only retained server-side when you publish it as a procedure. Ephemeral tokens scope every Live session to a single voice, tool set, and resumption handle.",
+    q: "What happens when the WebSocket drops or Gemini sends goAway?",
+    a: (
+      <>
+        The client keeps the latest <Id>sessionResumptionUpdate.newHandle</Id>.
+        On <Id>goAway</Id> or a socket error it calls{" "}
+        <Id>POST /session/{"{id}"}/token?handle=…</Id>, reopens the socket,
+        waits for <Id>setupComplete</Id>, then injects the server&apos;s{" "}
+        <Id>context-summary</Id> as a user turn. The prompt is rebuilt from
+        the server&apos;s current step, so a resumed session never reopens on
+        step 1.
+      </>
+    ),
   },
   {
-    q: "Who owns the data?",
-    a: "You do. Procedures, clips, and session telemetry are yours. Egocentric training data is opt-in per-procedure, with named export controls and a per-fleet kill switch.",
+    q: "What if the verification oracle is slow or down?",
+    a: (
+      <>
+        The poll path returns <Id>pending</Id> and tries again on the next
+        tick; nothing advances. The on-demand path trusts the learner: a{" "}
+        <Id>claim: done</Id> with no verdict (10 s timeout, parse failure, no
+        usable frame) advances with <Id>method: verbal</Id>, and a{" "}
+        <Id>claim: question</Id> returns <Id>check_failed</Id> so Live asks
+        the learner to describe what they see. Coaching never blocks on the
+        oracle.
+      </>
+    ),
   },
   {
-    q: "How is this different from Aquant or Neuron7?",
-    a: "Aquant and Neuron7 are powerful service-intelligence tools you open on a phone or laptop after stopping the work. Retrace runs continuously through the technician's glasses or phone camera while they work: visual auto-advance, voice replies, no swivel-chair.",
+    q: "Why ~4 seconds between checks?",
+    a: (
+      <>
+        A Flash call with <Id>thinking_budget=0</Id> returns in about a
+        second, and the oracle is deliberately biased toward{" "}
+        <Id>complete: false</Id>. Polling faster buys little and costs a
+        billable call per tick; polling slower makes auto-advance feel late.
+        Four seconds, with a second confirmation required for{" "}
+        <Id>marginal</Id> steps, was where a confirmed advance felt earned
+        rather than guessed. The poll also pauses while audio is active and
+        while any tool call is pending.
+      </>
+    ),
   },
   {
-    q: "How is this different from John Deere Service ADVISOR or Cat SIS?",
-    a: "Those are office and shop tools: searchable manuals, diagnostic codes, calibrations. They don't deliver real-time visual guidance on the equipment. Retrace is the layer on top: the technician's hands stay on the machine, the model watches, the procedure auto-advances when the completion criterion is visible.",
+    q: "Does it work without the glasses?",
+    a: (
+      <>
+        Yes. <Id>CaptureTransport</Id> is chosen per session: <Id>.glasses</Id>{" "}
+        streams from Ray-Ban Meta through the DAT SDK 0.8, <Id>.iPhone</Id>{" "}
+        wraps <Id>AVCaptureSession</Id> at the same 720×1280 geometry. Both
+        recording and coaching honour it end to end, and the app runs the
+        full flow with no glasses paired.
+      </>
+    ),
   },
   {
-    q: "Deployment model?",
-    a: "Hackathon-stage today. iOS app on TestFlight, backend on AWS Lightsail (migrating to eu-central-1 before Berlin). Production deployment is a self-hosted FastAPI + your Gemini API tenant. No third-party data egress.",
+    q: "What is stored, and where?",
+    a: (
+      <>
+        Procedures and steps in SQLite (<Id>data/retrace.db</Id>, WAL mode).
+        Source videos in <Id>uploads/</Id>; per-step clips and done-frames in{" "}
+        <Id>data/clips/{"{procedure_id}"}/</Id>; interview logs in{" "}
+        <Id>data/interviews/</Id>. Learner and troubleshoot sessions are
+        in-memory and end with the server process. Voice and camera frames
+        stream from the phone to Gemini and are not retained by the server.
+      </>
+    ),
+  },
+  {
+    q: "Does Gemini Live ever decide a step is done?",
+    a: (
+      <>
+        No. The <Id>advance_step</Id> tool was removed from Live&apos;s
+        toolset after it hallucinated advances on empty scenes. Live can only
+        ask (<Id>check_step</Id>); the oracle answers; the server advances;
+        and Live learns about it from the <Id>[ADVANCE]</Id> turn the phone
+        injects. The server handler for <Id>advance_step</Id> still exists
+        for the HUD swipe gesture.
+      </>
+    ),
   },
 ];
 
 export function Faq() {
   return (
-    <Section id="faq" bordered={false}>
-      <div className="mb-6 text-center">
-        <MonoLabel className="text-ink/80">Frequently Asked Questions (FAQ)</MonoLabel>
-      </div>
-      <h2 className="mb-12 text-balance text-center text-3xl font-light leading-[1.1] tracking-[-0.025em] text-ink sm:text-4xl lg:mb-16 lg:text-[56px]">
-        Six questions, six straight answers.
-      </h2>
-      <div className="overflow-hidden border border-stroke">
-        {items.map((it, i) => (
-          <details
-            key={i}
-            className="group border-t border-stroke first:border-t-0 [&_summary::-webkit-details-marker]:hidden"
-          >
-            <summary className="flex cursor-pointer items-center justify-between gap-6 bg-surface px-6 py-5 text-[16px] font-medium text-ink transition-colors hover:bg-surface-hi lg:px-8">
-              <span>{it.q}</span>
-              <span
-                aria-hidden
-                className="font-mono text-xl leading-none text-muted transition-transform duration-200 group-open:rotate-45"
+    <section id="faq" className="border-t border-stroke">
+      <div className="shell py-20 lg:py-32">
+        <div className="grid gap-10 lg:grid-cols-[1fr_1.6fr] lg:gap-20">
+          <SectionHeader
+            title="Questions engineers ask first."
+            lede={<>Straight answers, each backed by a file in one of the two repos.</>}
+          />
+          <div className="divide-y divide-stroke border-y border-stroke">
+            {ITEMS.map((it, i) => (
+              <details
+                key={i}
+                className="group [&_summary::-webkit-details-marker]:hidden"
               >
-                +
-              </span>
-            </summary>
-            <div className="bg-canvas px-6 pb-6 pt-1 text-[15px] leading-relaxed text-muted lg:px-8 lg:pb-8">
-              {it.a}
-            </div>
-          </details>
-        ))}
+                <summary className="flex cursor-pointer items-start justify-between gap-6 py-5 text-[16.5px] font-medium leading-[1.4] text-ink transition-colors hover:text-ink/80">
+                  <span>{it.q}</span>
+                  <span
+                    aria-hidden
+                    className="mt-0.5 font-mono text-xl leading-none text-muted transition-transform duration-200 group-open:rotate-45"
+                  >
+                    +
+                  </span>
+                </summary>
+                <div className="max-w-[44rem] pb-6 text-[15px] leading-[1.65] text-muted">
+                  {it.a}
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }
