@@ -3,8 +3,9 @@ export const TRAILER_URL = "https://youtu.be/JhW9ji7_pz4";
 export const EMAILS = ["jacogoby@gmail.com", "ykarthurlee@gmail.com"];
 export const MAILTO_URL = `mailto:${EMAILS.join(",")}?subject=Retrace%20pilot%20conversation`;
 
-export const REPO_SERVER_URL = "https://github.com/hshwang34/retrace-server";
-export const REPO_IOS_URL = "https://github.com/hshwang34/retrace-ios";
+// The server and iOS repos are private (PM decision #9, 2026-10-21): link GitHub profiles, not repos.
+export const GITHUB_HYUNSEOK_URL = "https://github.com/hshwang34";
+export const GITHUB_ARTHUR_URL = "https://github.com/artlee06";
 
 export const TEAM = [
   {

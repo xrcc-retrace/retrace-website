@@ -2,8 +2,8 @@ import Image from "next/image";
 import {
   EMAILS,
   MAILTO_URL,
-  REPO_IOS_URL,
-  REPO_SERVER_URL,
+  GITHUB_ARTHUR_URL,
+  GITHUB_HYUNSEOK_URL,
   TRAILER_URL,
 } from "@/lib/links";
 
@@ -21,8 +21,8 @@ const COLUMNS: { heading: string; links: { label: string; href: string; external
   {
     heading: "Code",
     links: [
-      { label: "retrace-server (FastAPI)", href: REPO_SERVER_URL, external: true },
-      { label: "retrace-ios (SwiftUI)", href: REPO_IOS_URL, external: true },
+      { label: "Hyunseok on GitHub", href: GITHUB_HYUNSEOK_URL, external: true },
+      { label: "Arthur on GitHub", href: GITHUB_ARTHUR_URL, external: true },
       { label: "Demo film", href: TRAILER_URL, external: true },
     ],
   },
