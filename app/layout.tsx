@@ -19,28 +19,28 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-const siteUrl = "https://retrace.systems";
+const siteUrl = "https://retracelab.com";
+const title = "Retrace — AI coaching through smart glasses";
+const description =
+  "Record an expert once; coach every learner forever. Gemini Live carries the voice, a separate Flash oracle verifies each step from the camera, and the phone joins the two. Built with FastAPI, SwiftUI and the Meta DAT SDK.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: "Retrace — AI copilot for field technicians",
-  description:
-    "Retrace records one expert demo and turns it into real-time AI coaching for every junior technician — voice + camera, through smart glasses or their phone.",
+  title,
+  description,
   openGraph: {
-    title: "Retrace — AI copilot for field technicians",
-    description:
-      "Record one expert. Coach every learner. Real-time voice + visual coaching through smart glasses or iPhone.",
+    title,
+    description,
     type: "website",
     url: siteUrl,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Retrace — AI copilot for field technicians",
-    description:
-      "Record one expert. Coach every learner. Real-time voice + visual coaching through smart glasses or iPhone.",
+    title,
+    description,
   },
   icons: {
-    icon: "/logo-mark.svg",
+    icon: "/LogoIcon.svg",
   },
 };
 

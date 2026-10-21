@@ -108,3 +108,59 @@ body {
 .hairline-b {
   border-bottom: 1px solid var(--stroke);
 }
+
+/* Single-page anchors: in-page CTAs and nav links scroll smoothly (the
+   reduced-motion block above forces this back to `auto`). */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+}
+
+code,
+kbd,
+pre {
+  font-family: var(--font-mono-jb), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+}
+
+/* Inline identifier — real names from the codebase, set in Geist Mono. */
+.ident {
+  font-family: var(--font-mono-jb), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+  font-size: 0.86em;
+  color: var(--ink);
+  background: var(--bg-surface);
+  border: 1px solid var(--stroke);
+  border-radius: 4px;
+  padding: 0.08em 0.38em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Hero session log — one page-load reveal, then at rest. The start state is
+   dimmed, not hidden, so the list is readable even if the animation never
+   runs; under reduced motion it simply appears. */
+@keyframes log-rise {
+  from {
+    opacity: 0.3;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.log-line {
+  animation: log-rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+/* Inline SVG diagrams inherit the page's type so text stays themed. */
+.diagram text {
+  font-family: var(--font-geist), system-ui, sans-serif;
+}
+.diagram text.mono {
+  font-family: var(--font-mono-jb), ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+}

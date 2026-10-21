@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Retrace — AI copilot for field technicians";
+export const alt = "Retrace — AI coaching through smart glasses";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -16,10 +16,9 @@ export default async function Image() {
           flexDirection: "column",
           padding: "84px 96px",
           color: "#f2f4f6",
-          fontFamily: "Inter, sans-serif",
+          fontFamily: "Geist, Inter, sans-serif",
         }}
       >
-        {/* Top-left brand mark */}
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
           <svg
             width="40"
@@ -58,17 +57,17 @@ export default async function Image() {
         <div style={{ flex: 1, display: "flex", alignItems: "center" }}>
           <div
             style={{
-              fontSize: 88,
+              fontSize: 76,
               fontWeight: 600,
               lineHeight: 1.05,
-              letterSpacing: -2.2,
-              maxWidth: 920,
+              letterSpacing: -2,
+              maxWidth: 980,
               display: "flex",
               flexDirection: "column",
             }}
           >
-            <span>AI copilot for</span>
-            <span style={{ color: "#a8aeb6" }}>field technicians.</span>
+            <span>Record an expert once.</span>
+            <span style={{ color: "#a8aeb6" }}>Coach every learner forever.</span>
           </div>
         </div>
 
@@ -93,9 +92,9 @@ export default async function Image() {
                 background: "#ffc21c",
               }}
             />
-            <span>Live on TestFlight</span>
+            <span>Gemini Live + Flash oracle · verified step advance</span>
           </div>
-          <span>Record once · Coach forever</span>
+          <span>FastAPI · SwiftUI · Meta DAT SDK</span>
         </div>
       </div>
     ),

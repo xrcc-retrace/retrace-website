@@ -15,13 +15,9 @@ export function MonoLabel({
   );
 }
 
-export function Eyebrow({ children }: { children: ReactNode }) {
-  return (
-    <div className="mb-6 inline-flex items-center gap-2">
-      <span className="h-px w-8 bg-stroke-hi" aria-hidden />
-      <MonoLabel className="text-ink/80">{children}</MonoLabel>
-    </div>
-  );
+/** Real identifier from the codebase (tool name, endpoint, field, model id). */
+export function Id({ children }: { children: ReactNode }) {
+  return <code className="ident">{children}</code>;
 }
 
 export function ChipTag({
@@ -46,89 +42,79 @@ export function ChipTag({
   );
 }
 
-export function DiamondMark({
-  className = "h-7 w-7",
-}: {
-  className?: string;
-}) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 100 100"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden
-    >
-      <rect
-        x="13.7"
-        y="50"
-        width="51.3"
-        height="51.3"
-        rx="8.85"
-        transform="rotate(-45 13.7 50)"
-        stroke="currentColor"
-        strokeWidth="3.28"
-        fill="none"
-      />
-      <rect
-        x="35.7"
-        y="50"
-        width="51.3"
-        height="51.3"
-        rx="8.85"
-        transform="rotate(-45 35.7 50)"
-        fill="currentColor"
-        stroke="currentColor"
-        strokeWidth="3.28"
-      />
-    </svg>
-  );
-}
 
-export function Section({
-  id,
-  eyebrow,
-  children,
-  bordered = true,
+/** Section opener: a heading and one lede, left-aligned, no eyebrow. */
+export function SectionHeader({
+  title,
+  lede,
   className = "",
 }: {
-  id?: string;
-  eyebrow?: ReactNode;
-  children: ReactNode;
-  bordered?: boolean;
+  title: ReactNode;
+  lede?: ReactNode;
   className?: string;
 }) {
   return (
-    <section
-      id={id}
-      className={`relative ${bordered ? "border-b border-stroke" : ""} ${className}`}
-    >
-      <div className="shell py-20 lg:py-32">
-        {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-        {children}
-      </div>
-    </section>
-  );
-}
-
-export function SectionHeading({
-  title,
-  subtitle,
-}: {
-  title: ReactNode;
-  subtitle?: ReactNode;
-}) {
-  return (
-    <div className="mb-12 max-w-3xl lg:mb-16">
-      <h2 className="text-balance text-3xl font-semibold leading-[1.1] tracking-[-0.02em] text-ink sm:text-4xl lg:text-5xl">
+    <div className={`max-w-[46rem] ${className}`}>
+      <h2 className="text-balance text-[30px] font-medium leading-[1.08] tracking-[-0.025em] text-ink sm:text-[40px] lg:text-[48px]">
         {title}
       </h2>
-      {subtitle && (
-        <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted lg:text-lg">
-          {subtitle}
+      {lede && (
+        <p className="mt-5 max-w-[40rem] text-pretty text-[16.5px] leading-[1.65] text-muted lg:text-[17.5px]">
+          {lede}
         </p>
       )}
     </div>
+  );
+}
+
+/**
+ * Annotated code panel. `lines` is the literal text (rendered verbatim) and
+ * `notes` is an optional list of short annotations rendered under it. Keeping
+ * payloads as plain strings means the page can't drift from real wire shapes
+ * through JSX formatting.
+ */
+export function CodeBlock({
+  title,
+  code,
+  notes,
+  tone = "default",
+  className = "",
+}: {
+  title?: ReactNode;
+  code: string;
+  notes?: ReactNode[];
+  tone?: "default" | "accent";
+  className?: string;
+}) {
+  const border = tone === "accent" ? "border-accent/40" : "border-stroke";
+  return (
+    <figure
+      className={`min-w-0 overflow-hidden rounded-[8px] border ${border} bg-surface/60 ${className}`}
+    >
+      {title && (
+        <figcaption className="flex items-center justify-between gap-3 border-b border-stroke px-4 py-2.5">
+          <span className="font-mono text-[11px] tracking-[0.04em] text-muted">
+            {title}
+          </span>
+        </figcaption>
+      )}
+      <pre className="overflow-x-auto px-4 py-3.5 text-[12.5px] leading-[1.6] text-ink">
+        <code>{code}</code>
+      </pre>
+      {notes && notes.length > 0 && (
+        <ul className="border-t border-stroke px-4 py-3 text-[13px] leading-[1.55] text-muted">
+          {notes.map((n, i) => (
+            <li key={i} className="flex gap-2.5 py-0.5">
+              <span
+                aria-hidden
+                className={`mt-[9px] h-px w-3 shrink-0 ${tone === "accent" ? "bg-accent" : "bg-stroke-hi"}`}
+              />
+              <span className="min-w-0">{n}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </figure>
   );
 }
 
