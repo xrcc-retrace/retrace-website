@@ -1,6 +1,6 @@
 import { HeroVideo } from "./HeroVideo";
 import { Cta } from "./primitives";
-import { TESTFLIGHT_URL } from "@/lib/links";
+import { TRAILER_URL } from "@/lib/links";
 
 // Wire events in the order they happen in one coaching session. Names are the
 // real Gemini Live message keys (GeminiLiveService.swift) and the real server
@@ -36,12 +36,12 @@ export function Hero() {
           <div className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-3">
             <Cta href="#architecture">See how it works</Cta>
             <a
-              href={TESTFLIGHT_URL}
+              href={TRAILER_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="text-[14px] text-muted underline decoration-stroke-hi underline-offset-4 transition-colors hover:text-ink"
             >
-              iOS build on TestFlight
+              Watch the demo film
             </a>
           </div>
         </div>

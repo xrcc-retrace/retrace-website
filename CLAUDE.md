@@ -60,7 +60,7 @@ retrace-website/
 │   ├── LazyVideo.tsx           # poster-first <video>; sources attach on intersection
 │   └── CustomCursor.tsx        # desktop-only reticle cursor (Framer springs → CSS vars)
 ├── lib/
-│   └── links.ts                # TestFlight, trailer, emails, repo URLs, TEAM (GitHub + LinkedIn TODO)
+│   └── links.ts                # trailer, emails, GitHub profile URLs, TEAM (GitHub + LinkedIn TODO); TestFlight removed (beta closed)
 └── public/
     ├── LogoIcon.svg · retrace-logo.svg
     └── video/
@@ -132,7 +132,7 @@ Type: **Geist** body/display (400/500/600, `-0.025em` to `-0.035em` tracking on 
 
 ## Related repos / docs
 
-- Backend: `../main-local-server-test/` (FastAPI + Gemini orchestration) → published as https://github.com/hshwang34/retrace-server
-- iOS client: `../retrace-ios/` (SwiftUI + Meta DAT SDK + Gemini Live) → https://github.com/hshwang34/retrace-ios
+- Backend: `../main-local-server-test/` (FastAPI + Gemini orchestration) → private repo https://github.com/hshwang34/retrace-server (not linked from the site)
+- iOS client: `../retrace-ios/` (SwiftUI + Meta DAT SDK + Gemini Live) → private repo https://github.com/hshwang34/retrace-ios (not linked from the site)
 - Project root: `../CLAUDE.md` for the full Retrace architecture (decisions 1–9)
 - Product brief for this site: `../docs/product/briefs/001-website-technical-overview-redesign.md`
