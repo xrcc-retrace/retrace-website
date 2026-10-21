@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Plus, Download } from "lucide-react";
-import { TESTFLIGHT_URL } from "@/lib/links";
+import { Plus, Play } from "lucide-react";
+import { TRAILER_URL } from "@/lib/links";
 import { NAV_LINKS } from "./StickyNav";
 
 const GLASS = "border border-white/10 bg-white/[0.06] backdrop-blur-md";
@@ -98,14 +98,14 @@ export function MobileNav({ className = "" }: { className?: string }) {
             See how it works
           </a>
           <a
-            href={TESTFLIGHT_URL}
+            href={TRAILER_URL}
             target="_blank"
             rel="noopener noreferrer"
             tabIndex={open ? undefined : -1}
             className={`flex items-center justify-center gap-2 self-stretch rounded-full px-5 py-3 text-[14px] font-medium text-ink transition-colors hover:bg-white/[0.10] ${GLASS}`}
           >
-            <Download className="size-5" strokeWidth={2} />
-            iOS build on TestFlight
+            <Play className="size-5" strokeWidth={2} />
+            Watch the demo film
           </a>
         </div>
       </div>

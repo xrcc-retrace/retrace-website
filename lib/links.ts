@@ -1,4 +1,4 @@
-export const TESTFLIGHT_URL = "https://testflight.apple.com/join/3wSB8VEu";
+// TestFlight beta closed (checked 2026-10-21: "no longer accepting"); link removed site-wide.
 export const TRAILER_URL = "https://youtu.be/JhW9ji7_pz4";
 export const EMAILS = ["jacogoby@gmail.com", "ykarthurlee@gmail.com"];
 export const MAILTO_URL = `mailto:${EMAILS.join(",")}?subject=Retrace%20pilot%20conversation`;

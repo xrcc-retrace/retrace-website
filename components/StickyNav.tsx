@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { MobileNav } from "./MobileNav";
-import { TESTFLIGHT_URL } from "@/lib/links";
+import { TRAILER_URL } from "@/lib/links";
 
 export const NAV_LINKS: { label: string; href: string }[] = [
   { label: "Capture", href: "#capture" },
@@ -52,14 +52,14 @@ export function StickyNav() {
         </nav>
 
         <a
-          href={TESTFLIGHT_URL}
+          href={TRAILER_URL}
           target="_blank"
           rel="noopener noreferrer"
           className={`absolute right-[var(--gutter)] hidden items-center rounded-full border border-white/10 bg-white/[0.06] px-4 py-2 text-[13px] font-medium text-ink backdrop-blur-md transition-opacity duration-500 hover:bg-white/[0.10] lg:inline-flex ${
             showCta ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
           }`}
         >
-          TestFlight
+          Demo film
         </a>
       </div>
     </header>

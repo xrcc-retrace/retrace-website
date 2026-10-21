@@ -4,7 +4,6 @@ import {
   MAILTO_URL,
   REPO_IOS_URL,
   REPO_SERVER_URL,
-  TESTFLIGHT_URL,
   TRAILER_URL,
 } from "@/lib/links";
 
@@ -32,7 +31,6 @@ const COLUMNS: { heading: string; links: { label: string; href: string; external
     links: [
       { label: EMAILS[0], href: MAILTO_URL },
       { label: EMAILS[1], href: MAILTO_URL },
-      { label: "iOS build on TestFlight", href: TESTFLIGHT_URL, external: true },
     ],
   },
 ];

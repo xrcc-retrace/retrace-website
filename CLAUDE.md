@@ -60,7 +60,7 @@ retrace-website/
 │   ├── LazyVideo.tsx           # poster-first <video>; sources attach on intersection
 │   └── CustomCursor.tsx        # desktop-only reticle cursor (Framer springs → CSS vars)
 ├── lib/
-│   └── links.ts                # TestFlight, trailer, emails, repo URLs, TEAM (GitHub + LinkedIn TODO)
+│   └── links.ts                # trailer, emails, repo URLs, TEAM (GitHub + LinkedIn TODO); TestFlight removed (beta closed)
 └── public/
     ├── LogoIcon.svg · retrace-logo.svg
     └── video/
